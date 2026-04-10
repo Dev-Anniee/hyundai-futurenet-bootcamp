@@ -19,29 +19,55 @@ air707.자원 = "대한항공"
 air707.자원 = "707"*/
 
 //1차 완성본
+//public class Airplane {
+//	private String name;
+//	private int num;
+//	private static int totalCount;
+//	//객체간 공유자원 (static)
+//
+//	public void makeAirplane(int airplane_num, String airplane_name) {
+//		num = airplane_num;
+//		name = airplane_name;
+//		totalCount++;
+//		airplaneInfo();
+//	}
+//
+//	private void airplaneInfo() { //직접적으로 보여주지 않겠다라는 의미의 private
+//		System.out.printf("이름 : %s, 번호 : %d\n",name,num);
+//	}
+//
+//
+//	//가끔 와서 쓸 기능
+//	public void airplaneTotalCount() {
+//		System.out.printf("비행기 총 제작 개수 : %d\n", totalCount);
+//	}
+//
+//
+//	//조금 더 배워서 2차 완성본 (this, 생성자x)
+//}
+
 public class Airplane {
 	private String name;
 	private int num;
 	private static int totalCount;
 	//객체간 공유자원 (static)
-	
-	public void makeAirplane(int airplane_num, String airplane_name) {
-		num = airplane_num;
-		name = airplane_name;
+
+	public Airplane(int num, String name) {
+		this.num = num;
+		this.name = name;
 		totalCount++;
 		airplaneInfo();
 	}
-	
+
 	private void airplaneInfo() { //직접적으로 보여주지 않겠다라는 의미의 private
-		System.out.printf("이름 : %s, 번호 : %d\n",name,num);
+		System.out.printf("이름 : %s, 번호 : %d",name,num);
+		System.out.println();
 	}
-	
-	
+
+
 	//가끔 와서 쓸 기능
 	public void airplaneTotalCount() {
-		System.out.printf("비행기 총 제작 개수 : %d\n", totalCount);
+		System.out.printf("비행기 총 제작 개수 : %d", totalCount);
+		System.out.println();
 	}
-	
-	
-	//조금 더 배워서 2차 완성본 (this, 생성자x)
 }
