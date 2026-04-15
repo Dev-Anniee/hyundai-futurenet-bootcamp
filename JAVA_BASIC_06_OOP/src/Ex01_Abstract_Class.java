@@ -38,7 +38,7 @@ public class Ex01_Abstract_Class {
         System.out.println(child.pos);
         child.stop();
 
-        Abclass abclass = child;
+        Abclass abclass = child; //****중요***** 전자제품( buy(Product) , Product[] cart
         abclass.run();
         abclass.stop(); //부모 타입으로 접근하더라도 재정의 되어있다면 재정의 함수로 간다
 
