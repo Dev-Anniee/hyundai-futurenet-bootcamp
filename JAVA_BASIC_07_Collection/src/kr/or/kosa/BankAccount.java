@@ -4,11 +4,17 @@ import java.util.Calendar;
 import java.util.List;
 
 class Bank{
-	List<Account> account = new ArrayList<>();
-	int totalAccount;
-	
+	private List<Account> account;
+	private int totalAccount;
+
+	public Bank(){
+		account = new ArrayList<>();
+		totalAccount=0;
+	}
+
 	public void addAccount(String account_no,String name) {
 		account.add(new Account(account_no, name));
+		totalAccount++;
 	}
 	
 	public Account getAccount(String account_no) {
@@ -43,14 +49,13 @@ class Bank{
 		return sum;
 	}
 }
-	
 
 class Account{
 	Calendar cal = Calendar.getInstance();
 	private String account_no;
 	private String name;
 	private long balance;
-	List<Transaction> transactions;
+	private List<Transaction> transactions;
 	
 	public String getAccount_no() {
 		return account_no;
@@ -66,28 +71,30 @@ class Account{
 		this.balance = 0;
 		transactions = new ArrayList<>();
 	}
+
+	public String setDate() {
+		return String.format("%d년%02d월%02d일",
+				cal.get(Calendar.YEAR),
+				cal.get(Calendar.MONTH) + 1,
+				cal.get(Calendar.DAY_OF_MONTH));
+	}
+
+	public String setTime() {
+		return String.format("%02d시%02d분",
+				cal.get(Calendar.HOUR_OF_DAY),
+				cal.get(Calendar.MINUTE));
+	}
 	
 	public void deposit(long amount){
 		balance+=amount;
-		String transactionDate = String.format("%d년%02d월%02d일", 
-                cal.get(Calendar.YEAR), 
-                cal.get(Calendar.MONTH) + 1, 
-                cal.get(Calendar.DAY_OF_MONTH));
-
-		String transactionTime = String.format("%02d시%02d분", 
-		                cal.get(Calendar.HOUR_OF_DAY), 
-		                cal.get(Calendar.MINUTE));
-		transactions.add(new Transaction(transactionDate, transactionTime,"입급", amount, balance));
+		transactions.add(new Transaction(setDate(), setTime(),"입급", amount, balance));
 		System.out.printf(amount+"원 입금하셨습니다\n");
 	}
 	
 	public void withdraw(long amount){
 		if(balance-amount>=0) {
 			balance-=amount;
-			String transactionDate = String.format("%d년%02d월%02d일", cal.get(Calendar.YEAR), cal.get(Calendar.MONTH) + 1, cal.get(Calendar.DAY_OF_MONTH));
-
-			String transactionTime = String.format("%02d시%02d분", cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE));
-			transactions.add(new Transaction(transactionDate, transactionTime,"출금", amount, balance));
+			transactions.add(new Transaction(setDate(), setTime(),"출금", amount, balance));
 			System.out.printf(amount+"원 출금하셨습니다\n");
 		}
 		else {
