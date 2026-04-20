@@ -1,0 +1,4 @@
+word =C:\tmp\a.txt
+word =C:\tmp\Car.java
+word =C:\tmp\file.txt
+word =C:\tmp\new.txt
