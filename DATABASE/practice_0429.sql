@@ -451,7 +451,7 @@ references c_dept(deptno) ON DELETE CASCADE;
 delete from c_emp where empno=1  >> deptno >> 100번
 delete from c_dept where deptno=100; 삭제 안되요 (참조 하고 있으니까)
 
-ON DELETE CASCADE 걸면 삭제되요
+ON DELETE CASCADE 걸면 삭제돼요
 delete from c_dept where deptno=100;  --> c_emp 1 번 사원데이터 삭제
 부모삭제 >> 참조하고 있는 자식도 삭제
 
@@ -483,3 +483,413 @@ insert into student_grade (student_id, name, korean, english, math, department_i
 select s.STUDENT_ID,s.name,s.sum,s.avg,s.department_id,d.name from student_grade s
 join department d on s.department_id = d.department_id;
 
+/* 사원 */
+CREATE TABLE EMP (
+                     empno NUMBER NOT NULL, /* 사번 */
+                     ename VARCHAR2(20), /* 이름 */
+                     sal NUMBER, /* 급여 */
+                     deptno NUMBER /* 부서번호 */
+);
+
+/* 부서 */
+CREATE TABLE DEPT (
+                      deptno NUMBER, /* 부서번호 */
+                      dname VARCHAR2(20) /* 부서명 */
+);
+
+ALTER TABLE EMP
+    ADD CONSTRAINT PK_EMP_EMPNO	PRIMARY KEY (empno);
+
+ALTER TABLE DEPT
+    ADD CONSTRAINT PK_DEPT_DEPTNO PRIMARY KEY (deptno);
+
+ALTER TABLE EMP
+    ADD CONSTRAINT FK_DEPT_TO_EMP FOREIGN KEY (deptno) REFERENCES DEPT (deptno);
+--제약 END
+
+--개발자에게 필요한 SQL
+/*
+ SEQUENCE 특징
+1) 자동적으로 유일 번호를 생성합니다.
+2) 공유 가능한 객체
+3) 주로 기본 키 값을 생성하기 위해 사용됩니다.
+4) 어플리케이션 코드를 대체합니다.
+5) 메모리에 CACHE되면 SEQUENCE 값을 액세스 하는 효율성을 향상시킵니다.
+
+
+CREATE  SEQUENCE  sequence_name
+[INCREMENT  BY  n]
+[START  WITH  n]
+[{MAXVALUE n | NOMAXVALUE}]
+[{MINVALUE n | NOMINVALUE}]
+[{CYCLE | NOCYCLE}]
+[{CACHE | NOCACHE}];
+*/
+desc board;
+drop table board;
+
+
+create table board (
+                       boardid number constraint pk_board_boardid primary key,
+                       title nvarchar2(50)
+);
+
+select * from user_constraints where table_name='BOARD';
+
+-- PK : not null , unique , index (where )
+/*
+insert into board(boardid,title) values(1,'방가');
+insert into board(boardid,title) values(2,'방가..');
+
+boardid 들어가는 데이터 (규칙)
+
+처음 : 1
+그다음 : 2 , 3  1씩 증가하게 ...
+
+*/
+insert into board(boardid, title)
+values((select count(boardid)+1 from board),'방가_1');
+
+insert into board(boardid, title)
+values((select count(boardid)+1 from board),'방가_2');
+
+insert into board(boardid, title)
+values((select count(boardid)+1 from board),'방가_3');
+
+select * from board;
+
+--이때 누군가 2번 삭제
+delete from board where boardid=2;
+
+select * from board;
+
+insert into board(boardid, title)
+values((select count(boardid)+1 from board),'방가_4');
+--ORA-00001: 무결성 제약 조건(KOSA.PK_BOARD_BOARDID)에 위배됩니다
+
+--글을 삭제 다시 쓰면 논리가 맞지 않아요 (x)
+--max
+rollback;
+
+insert into board(boardid, title)
+values((select nvl(max(boardid),0) + 1  from board),'방가_1');
+
+insert into board(boardid, title)
+values((select nvl(max(boardid),0) + 1  from board),'방가_2');
+
+insert into board(boardid, title)
+values((select nvl(max(boardid),0) + 1  from board),'방가_3');
+
+select * from board;
+
+delete from board where boardid=2;
+
+select * from board;
+
+insert into board(boardid, title)
+values((select nvl(max(boardid),0) + 1  from board),'방가_4');
+
+select * from board;
+commit;
+
+--고민해보기
+--시퀀스 객체 (순번) 번호표뽑기
+--공유객체
+
+create sequence board_num;
+
+--실 채번
+select board_num.nextval from dual;  --채번
+select board_num.currval from dual;  --마지막 채번 번호 확인
+
+-- A  > board_num  > 1
+-- B  > board_num  > 2
+-- A  > board_num  > 3
+-- A  > board_num  > 4
+-- B  > board_num  > 5
+--테이블마다 사용 공유객체 ....
+
+create sequence kboard_num;
+
+create table kboard(
+                       num number constraint pk_kboard_num primary key,
+                       title nvarchar2(20)
+);
+
+insert into kboard(num,title)
+values(kboard_num.nextval, '글쓰기');
+
+select * from kboard;
+
+delete from kboard where num=2;
+
+select * from kboard;
+
+insert into kboard(num,title)
+values(kboard_num.nextval, '글쓰기...');
+
+select * from kboard;
+--------------------------------------------------------------------------------
+--sequence 객체
+/*
+1. 오라클  (0)
+2. my-sql (x)
+3. ms-sql (0) 버전: 2012버전
+4. Mariadb(0)
+5. PostgreSQL(0)
+
+my-sql
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50)
+);
+insert into orders(name) values('제목')
+
+
+MS-sql
+create table board(boardnum int identity(1,1) , title)
+insert into board(title) values('제목');
+*/
+--
+/* 옵션
+CREATE  SEQUENCE  sequence_name
+[INCREMENT  BY  n]
+[START  WITH  n]
+[{MAXVALUE n | NOMAXVALUE}]
+[{MINVALUE n | NOMINVALUE}]
+[{CYCLE | NOCYCLE}]
+[{CACHE | NOCACHE}];
+*/
+
+create sequence seq_num
+    start with 10
+    increment by 2;
+
+select seq_num.nextval from dual;
+
+--------------------------------------------------------------------------------
+---게시판 글
+--1, 2, 3, 4 ..... 1000
+
+--가장 최근에 쓴글 (글번호 가장 큰것)
+--select * from board order by num desc
+--------------------------------------------------------------------------------
+
+-- 04.29 3시~
+--rownum
+--1. 의사컬럼 : 실제 물리적으로 존재하는 컬럼이 아니고 논리적 존재
+--create table 생성되는 컬럼은 아니고
+--rownum : 실제로 테이블에 컬럼으로 존재하지 않지만 내부적으로 행번호를 부여하는 컬럼
+
+select * from emp;
+
+select rownum, empno
+from emp;
+
+select rownum, empno,ename,sal --먼저 실행된다
+from emp
+order by sal; --뒤죽박죽 번호
+--포인트 : rownum
+-- From -> Where -> Rownum -> Select -> Order by
+-- From -> Select -> Order by
+
+-- 샘플
+select *
+from EMP
+where rownum=3;
+-- rownum은 서브쿼리 안에서 사용한다
+
+--활용
+select empno,ename,sal
+from emp
+order by sal -- 기준 데이터 가상 테이블
+
+-- 1. 기준 데이터를 만든다 (subquery) > 순번을 부여 한다
+select rownum, e.*
+from(
+        select empno,ename,sal
+        from emp
+        order by sal -- sal asc 후에 정렬된 데이터 순번을 가져온다 (기준 데이터 생성)
+    ) e;
+
+--상위 n명이라는 기준 설정 가능
+--Top n 쿼리
+--MS-SQL :select top 3, * from emp order by sal asc;
+
+--Oracle (Top(n)-> x)
+-- 1. 정렬 선행
+-- 2. 정렬 기준 rownum 조건
+
+select rownum,e.empno, e.ename, e.sal
+from  (
+          select empno,ename,sal
+          from emp
+          order by sal desc
+      ) e;
+
+-- 급여를 많이 받는 사원 5명
+select *
+from (
+         select rownum as num,e.empno, e.ename, e.sal
+         from  (
+                   select empno,ename,sal
+                   from emp
+                   order by sal desc
+               )e
+     ) n where num<=5;
+--게시판에 페이징 처리 (대용량 데이터 페이지 성능 -> rownum)
+
+/*
+rownum 자리 >> FETCH
+
+OFFSET = 몇 개 건너뛸지
+FETCH  = 몇 개 가져올지
+
+SELECT 컬럼
+FROM 테이블
+ORDER BY 컬럼
+OFFSET 시작위치 ROWS
+FETCH NEXT 가져올개수 ROWS ONLY;
+
+1페이지 (1~10번)
+SELECT *
+FROM BOARD
+ORDER BY ID DESC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+
+(11~20)
+SELECT *
+FROM BOARD
+ORDER BY ID DESC
+OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY;
+*/
+
+--게시판 paging 처리
+
+/*
+ 게시판 데이터 104건
+ total account = 104
+ pagesize =10 (한 화면에 보여지는 데이터 수 10 row)
+ pagecount > 11개 page
+
+ [1] [2] [3] [4] [5] [6] [7] [8] [7] [10] [11]
+ <a href = "list.do?page=1">[1]</a>
+
+ 10개의 묶음에서 첫 번째 묶음
+ 1~10 > num between 1 and 10
+ 11~20 > num between 11 and 20
+
+ startrow = ?
+ endrow = ?
+
+ [1] [2] [3] [4] [5] 다음
+ [6] [7] [8] [7] [10] 다음
+ 이전 [11] -4건
+*/
+
+--HR로 이동
+show user;
+
+select count(*) from employees; --107
+--pagesize=10
+--pagecount=11
+-- [1] [2] [3] [4] [5] [6] [7] [8] [7] [10] [11]
+-- [1] 클릭 1~10 데이터
+
+--1.1 단계 (기준 데이터 : 정렬) 사번
+select *
+from employees
+order by  employee_id asc;
+
+--2.2단계 (기준 데이터 순번)
+select rownum as num, e.*
+from (
+         select *
+         from employees
+         order by  employee_id asc
+    ) e
+where rownum<=50;
+
+--[1][2][3]
+--3.3 단계
+-- 1번 클릭
+select *
+from(
+        select rownum as num, e.*
+        from (
+                 select *
+                 from employees
+                 order by  employee_id asc
+             ) e
+        where rownum<=10
+    ) ee where num>=1;
+
+-- 2번 클릭
+select *
+from(
+        select rownum as num, e.*
+        from (
+                 select *
+                 from employees
+                 order by  employee_id asc
+             ) e
+        where rownum<=20
+    ) ee where num>=11; -- 데이터 다 가져 와야 해서 비효율
+
+-- 3번 클릭
+select *
+from(
+        select rownum as num, e.*
+        from (
+                 select *
+                 from employees
+                 order by  employee_id asc
+             ) e
+        where rownum<=30
+    ) ee where num>=21; -- 데이터 다 가져 와야 해서 비효율
+--숫자만 바꾸면 된다
+
+--그런데 시대의 흐름에 따라 세대교체
+--1.
+    /*
+    1. 세대교체
+    SELECT 컬럼
+    FROM 테이블
+    ORDER BY 컬럼
+    OFFSET 시작위치 ROWS
+    FETCH NEXT 가져올개수 ROWS ONLY;
+    */
+--2.
+select *
+from (
+    select row_number() over (order by employee_id asc) as num, e.* --over 쿼리 장점
+    from employees e
+     ) n
+where n.num between  1 and 10;
+
+--오라클 12c 이상
+SELECT *
+FROM employees
+ORDER BY employee_id
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY;
+
+--OFFSET : 시작 위치 지정 (0부터 시작)
+--FETCH NEXT : 가져올 개수
+--예: OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY; → 11번째부터 20번째까지
+
+--그럼 성능
+--Keyset Pagination FETCH NEXT 기반  WHERE employee_id > 100 제어가 가장 좋고
+SELECT *
+FROM employees
+WHERE employee_id > 100
+ORDER BY employee_id ASC
+    FETCH NEXT 10 ROWS ONLY;
+
+/*
+12C 이상에서는 OFFSET/FETCH
+그 이하 버전에서는 ROWNUM 페이징  쓰는 것이 일반적입니다
+OFFSET/FETCH 와 ROWNUM 성능은 큰 차이가 없다 하니까요 ^^
+*/
+
+--4월 30일 수업 일정
+--model, 개발자에게 필요한 sql -> PL/SQL -> 모델링
