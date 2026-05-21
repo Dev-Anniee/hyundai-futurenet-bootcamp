@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style type="text/css">
+		/* 
+		UI - Layout
+		
+		1. Div (영역) : header , nav , content , bottom 영역을 가지는 Div  (의미 해석)
+		2. <article> <aside> <nav> 시맨틱 태그 (표준화) : <article> 안에는 기사가 들어있어 > 웹 접근성 
+		3. 구현(반응형) > flexbox  , grid 
+		4. Template (이미 반응형) >  css, js 제공 > bootstrap , tailwind ...
+		
+		*/
+		/*  margin: auto 중앙정렬 */
+		#wrap { width: 600px;margin: auto}
+		#header{height: 50px;background-color: black;}
+		#main{margin-top: 10px;}
+		#left_main{
+			height: 300px;
+			width: 100px;
+			background-color: gray;
+			margin-right: 10px;
+			float:left;
+		}
+		#right_main{
+			height: 300px;
+			width: 490px;
+			background-color: gray;
+			float:left;
+		}
+		#both {clear: both;}
+		#footer{
+			height: 50px;
+			margin-top: 10px;
+			background-color: black;
+		}
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="header"></div>
+		<div id="main">
+			<div id="left_main"></div>
+			<div id="right_main"></div>
+		</div>
+		<div id="both"></div>
+		<div id="footer"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	
+	<style type="text/css">
+		
+		/* 
+		  웹서버 > 아파치 > my.html > common.css , header.css , body.css  common.js , header.js
+		
+		  클라이언트 접속 > my.html 요청
+		  common.css , header.css , body.css  common.js , header.js 다운로드 메모리 또는 local 가지고 
+		  
+		   
+		  집에서 서버 구축 : 고정 IP , 도메인 ... > 아파치 > my.html > common.css , header.css , body.css  common.js , header.js
+		  
+		  CDN :common.css , header.css 내 친구가 내 서버에서 받는 것이 아니고 
+		  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		  
+		  구글 서버 , 네이버 서버 다운로드 받게 한다 
+		 */	
+		 
+		 .floating-box{
+		 	width: 150px;
+		 	height: 80px;
+		 	margin: 10px;
+		 	border: 3px dotted red;
+		 	float: left;
+		 }
+		 
+		 .after-box{
+		 	border: 3px solid blue;
+		 	background-color: gold;
+		 	clear:both;
+		 }
+		 
+		 #my-box{
+		   /* 내 페이지에 한번 적용 
+		      <div id="my-box">  웹 페이지 div 태그 선택 식별값 : document.getElementById("my-box")
+		   */
+		 }
+	</style>
+</head>
+<body>
+<h3>float</h3>
+	<div class="floating-box">1</div>
+	<div class="floating-box">2</div>
+	<div class="floating-box">3</div>
+	<div class="floating-box">4</div>
+	<div class="after-box" >Another Box</div>
+</body>
+</html>

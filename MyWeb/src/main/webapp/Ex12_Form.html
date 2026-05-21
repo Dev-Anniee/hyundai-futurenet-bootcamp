@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+	개발자 필수 태그
+	메모장 : 회원가입 , 로그인 ,게시판 기본  (layout)
+	input 태그들 (값을 입력 , 수정 ) 
+	
+	로그인 페이지
+	id, pwd 입력
+	클라이언트 입력값  -> 서버 (전달)
+	
+	입력한 데이터 (운송수단) -> 전달
+	form 태그 (동기)
+ -->
+    <form action="Ex12_ok.jsp" method="post">
+    	ID:<input type="text" name="userid"><br>
+    	PWD:<input type="password" name="userpwd"><br>
+<!--     	<input type="submit" value="목적지로 출발"> -->
+		<input type = "image" src = "images/button.jpg" alt= "전송" width="60" height= 30>
+    	<input type="reset" value="값 초기화">
+    </form>
+ 	<a href="Ex12_ok.jsp?userid=hong&userpwd=1004">GET방식</a>
+<!-- 
+	form 전송을 담당하는 태그 (서버로)
+	
+	1. action="" 목적지 주소 : *.jsp ,  *.do  > Ex12_ok.jsp
+	1.1  servlet (spring)  > action="Ex12_ok.do"
+	
+	2.운송수단(배 , 비행기)
+	method="get"  배 > Ex12_ok.jsp?userid=hong&pwd=1004 (보안) > <a href="board.jsp?no=100
+	>> http://localhost:8080/Ex12_ok.jsp?userid=hong&userpwd=1234
+	
+	method="post" 비행기 > Ex12_ok.jsp > http (안에 숨겨서)
+	>> http://localhost:8080/Ex12_ok.jsp
+    input name="userid" 필수 > userid=hong
+    id 서버로 전송 (비동기) : ajax
+    
+    정리  
+    1. form  동기 전송 : POST
+    2. GET : <a href="">
+    3. 동기식 : GET, POST
+       비동기식 : REST 방식 > GET, POST -> FETCH + PUT, DELETE (method : 서버실행에 대한 의미)
+       
+    fetch('/api/users', {
+  		 method: 'POST', --insert 
+ 		 headers: {'Content-Type': 'application/json'},
+         body: JSON.stringify({
+    						name: '홍길동',
+    						age: 30
+ 						 })
+	    })
+	.then(response => response.json())
+	.then(data => console.log(data));
+       
+    POINT 
+    <input type="submit" value="목적지로 출발"> 다른 태그로?
+    1. <input type="submit" value=
+    2. <input type = "image" src= "images/1.jpg" -> 이미지도 submit 가능하다/ 내부적으로 submit
+    3. <input type="button" onclick="call()" 전송기능이 없어요
+	3.1 function call() { document.form.submit();}
+	
+ --> 	
+</body>
+</html>

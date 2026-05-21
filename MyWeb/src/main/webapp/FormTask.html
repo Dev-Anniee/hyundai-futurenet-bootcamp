@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>FormTask - 회원가입</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-container {
+            width: 420px;
+            background-color: white;
+            padding: 40px;
+            border-radius: 22px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .signup-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .signup-title h1 {
+            font-size: 32px;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .signup-title p {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .input-box {
+            margin-bottom: 18px;
+        }
+
+        .input-box label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .input-box input,
+        .input-box select {
+            width: 100%;
+            height: 48px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 0 14px;
+            font-size: 14px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-box input:focus,
+        .input-box select:focus {
+            border-color: #c33764;
+            box-shadow: 0 0 0 3px rgba(195, 55, 100, 0.15);
+        }
+
+        .birth-box {
+            display: flex;
+            gap: 8px;
+        }
+
+        .birth-box select {
+            flex: 1;
+        }
+
+        .gender-box {
+            display: flex;
+            gap: 10px;
+            width: 80%;
+        }
+
+        .gender-box label {
+            flex: 1;
+            height: 45px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .gender-box input {
+            margin-right: 6px;
+        }
+
+        .gender-box input[type="radio"] {
+            width: 16px;
+            height: 16px;
+            transform: scale(0.8);
+            margin-right: 4px;
+        }
+
+        .agree-box {
+            margin: 20px 0;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .agree-box label {
+            display: block;
+            cursor: pointer;
+        }
+
+        .agree-box input {
+            margin-right: 6px;
+        }
+
+        .signup-btn {
+            width: 100%;
+            height: 52px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(195, 55, 100, 0.35);
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-text a {
+            color: #c33764;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        .required {
+            color: #c33764;
+        }
+    </style>
+</head>
+<body>
+
+<div class="signup-container">
+
+    <div class="signup-title">
+        <h1>회원가입</h1>
+        <p>회원 정보를 입력하고 계정을 생성하세요</p>
+    </div>
+
+    <form action="register.jsp" method="post">
+
+        <!-- 아이디 -->
+        <div class="input-box">
+            <label for="userid">아이디 <span class="required">*</span></label>
+            <input type="text" id="userid" name="userid" placeholder="아이디를 입력하세요" required>
+        </div>
+
+        <!-- 비밀번호 -->
+        <div class="input-box">
+            <label for="password">비밀번호 <span class="required">*</span></label>
+            <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+        </div>
+
+        <!-- 비밀번호 확인 -->
+        <div class="input-box">
+            <label for="passwordCheck">비밀번호 확인 <span class="required">*</span></label>
+            <input type="password" id="passwordCheck" name="passwordCheck" placeholder="비밀번호를 다시 입력하세요" required>
+        </div>
+
+        <!-- 이름 -->
+        <div class="input-box">
+            <label for="username">이름 <span class="required">*</span></label>
+            <input type="text" id="username" name="username" placeholder="이름을 입력하세요" required>
+        </div>
+
+        <!-- 이메일 -->
+        <div class="input-box">
+            <label for="email">이메일 <span class="required">*</span></label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required>
+        </div>
+
+        <!-- 휴대폰 번호 -->
+        <div class="input-box">
+            <label for="phone">휴대폰 번호</label>
+            <input type="tel" id="phone" name="phone" placeholder="010-1234-5678">
+        </div>
+
+        <!-- 생년월일 -->
+        <div class="input-box">
+            <label>생년월일</label>
+            <div class="birth-box">
+                <select name="birthYear">
+                    <option value="">년</option>
+                    <option value="2006">2006</option>
+                    <option value="2005">2005</option>
+                    <option value="2004">2004</option>
+                    <option value="2003">2003</option>
+                    <option value="2002">2002</option>
+                    <option value="2001">2001</option>
+                    <option value="2000">2000</option>
+                </select>
+
+                <select name="birthMonth">
+                    <option value="">월</option>
+                    <option value="1">1월</option>
+                    <option value="2">2월</option>
+                    <option value="3">3월</option>
+                    <option value="4">4월</option>
+                    <option value="5">5월</option>
+                    <option value="6">6월</option>
+                    <option value="7">7월</option>
+                    <option value="8">8월</option>
+                    <option value="9">9월</option>
+                    <option value="10">10월</option>
+                    <option value="11">11월</option>
+                    <option value="12">12월</option>
+                </select>
+
+                <select name="birthDay">
+                    <option value="">일</option>
+                    <option value="1">1일</option>
+                    <option value="2">2일</option>
+                    <option value="3">3일</option>
+                    <option value="4">4일</option>
+                    <option value="5">5일</option>
+                    <option value="6">6일</option>
+                    <option value="7">7일</option>
+                    <option value="8">8일</option>
+                    <option value="9">9일</option>
+                    <option value="10">10일</option>
+                    <option value="11">11일</option>
+                    <option value="12">12일</option>
+                    <option value="13">13일</option>
+                    <option value="14">14일</option>
+                    <option value="15">15일</option>
+                    <option value="16">16일</option>
+                    <option value="17">17일</option>
+                    <option value="18">18일</option>
+                    <option value="19">19일</option>
+                    <option value="20">20일</option>
+                    <option value="21">21일</option>
+                    <option value="22">22일</option>
+                    <option value="23">23일</option>
+                    <option value="24">24일</option>
+                    <option value="25">25일</option>
+                    <option value="26">26일</option>
+                    <option value="27">27일</option>
+                    <option value="28">28일</option>
+                    <option value="29">29일</option>
+                    <option value="30">30일</option>
+                    <option value="31">31일</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 성별 -->
+        <div class="input-box">
+            <label>성별</label>
+            <div class="gender-box">
+                <label>
+                    <input type="radio" name="gender" value="male">
+                    남자
+                </label>
+
+                <label>
+                    <input type="radio" name="gender" value="female">
+                    여자
+                </label>
+
+                <label>
+                    <input type="radio" name="gender" value="none">
+                    선택 안 함
+                </label>
+            </div>
+        </div>
+
+        <!-- 약관 동의 -->
+        <div class="agree-box">
+            <label>
+                <input type="checkbox" name="agreeTerms" required>
+                이용약관에 동의합니다. <span class="required">*</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="agreePrivacy" required>
+                개인정보 수집 및 이용에 동의합니다. <span class="required">*</span>
+            </label>
+
+            <label>
+                <input type="checkbox" name="agreeMarketing">
+                마케팅 정보 수신에 동의합니다.
+            </label>
+        </div>
+
+        <!-- 회원가입 버튼 -->
+        <button type="submit" class="signup-btn">회원가입</button>
+
+        <p class="login-text">
+            이미 계정이 있으신가요?
+            <a href="#">로그인</a>
+        </p>
+
+    </form>
+</div>
+
+</body>
+</html>
