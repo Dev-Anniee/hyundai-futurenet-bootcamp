@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>강좌용 화이트보드</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial;
+    background:#f1f1f1;
+}
+
+.toolbar{
+    background:#222;
+    color:white;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+}
+
+button{
+    padding:8px 12px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+canvas{
+    background:white;
+    border:2px solid #333;
+    display:block;
+    margin:20px auto;
+    cursor:crosshair;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="toolbar">
+
+    <label>색상</label>
+    <input type="color" id="colorPicker" value="#000000">
+
+    <label>굵기</label>
+    <input type="range" id="lineWidth" min="1" max="20" value="3">
+
+    <button onclick="setTool('pen')">펜</button>
+    <button onclick="setTool('eraser')">지우개</button>
+
+    <button onclick="setTool('line')">직선</button>
+    <button onclick="setTool('rect')">사각형</button>
+    <button onclick="setTool('circle')">원</button>
+
+    <button onclick="clearBoard()">전체삭제</button>
+    <button onclick="saveImage()">저장</button>
+
+</div>
+
+<canvas id="board" width="1200" height="700"></canvas>
+
+<script>
+
+const canvas = document.getElementById("board");
+const ctx = canvas.getContext("2d");
+
+const colorPicker = document.getElementById("colorPicker");
+const lineWidth = document.getElementById("lineWidth");
+
+let drawing = false;
+
+let startX = 0;
+let startY = 0;
+
+let currentTool = "pen";
+
+let snapshot;
+
+ctx.lineCap = "round";
+ctx.lineJoin = "round";
+
+canvas.addEventListener("mousedown", startDraw);
+canvas.addEventListener("mousemove", drawingBoard);
+canvas.addEventListener("mouseup", stopDraw);
+
+function setTool(tool){
+    currentTool = tool;
+}
+
+function startDraw(e){
+
+    drawing = true;
+
+    startX = e.offsetX;
+    startY = e.offsetY;
+
+    snapshot = ctx.getImageData(0,0,canvas.width,canvas.height);
+
+    if(currentTool === "pen" || currentTool === "eraser"){
+        ctx.beginPath();
+        ctx.moveTo(startX,startY);
+    }
+}
+
+function drawingBoard(e){
+
+    if(!drawing) return;
+
+    ctx.putImageData(snapshot,0,0);
+
+    ctx.strokeStyle =
+        currentTool === "eraser"
+        ? "#ffffff"
+        : colorPicker.value;
+
+    ctx.lineWidth = lineWidth.value;
+
+    let currentX = e.offsetX;
+    let currentY = e.offsetY;
+
+    // 펜
+    if(currentTool === "pen" || currentTool === "eraser"){
+
+        ctx.lineTo(currentX,currentY);
+        ctx.stroke();
+    }
+
+    // 직선
+    else if(currentTool === "line"){
+
+        ctx.beginPath();
+
+        ctx.moveTo(startX,startY);
+        ctx.lineTo(currentX,currentY);
+
+        ctx.stroke();
+    }
+
+    // 사각형
+    else if(currentTool === "rect"){
+
+        let width = currentX - startX;
+        let height = currentY - startY;
+
+        ctx.strokeRect(startX,startY,width,height);
+    }
+
+    // 원
+    else if(currentTool === "circle"){
+
+        let radius = Math.sqrt(
+            Math.pow(currentX-startX,2)
+            +
+            Math.pow(currentY-startY,2)
+        );
+
+        ctx.beginPath();
+
+        ctx.arc(startX,startY,radius,0,Math.PI*2);
+
+        ctx.stroke();
+    }
+}
+
+function stopDraw(){
+
+    drawing = false;
+}
+
+function clearBoard(){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+
+function saveImage(){
+
+    const link = document.createElement("a");
+
+    link.download = "whiteboard.png";
+
+    link.href = canvas.toDataURL();
+
+    link.click();
+}
+
+</script>
+
+</body>
+</html>

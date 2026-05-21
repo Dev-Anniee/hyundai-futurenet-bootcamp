@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style type="text/css">
+		/*
+			개발자에 필수 적인 CSS (selector : css , javascript , jquery)
+		
+		    1. 기본 선택자(기존에 있는 태그를 찿아서) : p , div , hr , h3
+		    ex) p {color:red;}
+		    
+		    2. 다중 선택자(group)
+		    ex) p, h2 , h3 , h4 {color:blue;}
+		    
+		    3. >> . > class
+		       >> # > id
+		       .my-color{color:red;"}  > <div class="my-color"></div>
+		       
+		    4. 결합선택자
+		    p {}
+		    p.one {border:1px} > <p class="one"></p>
+		    p.two {color:red}  > <p class="two"></p>
+		    
+		    5. 자손(후손) 선택자
+		    div p{color:green} 
+		    
+		    
+		    6. 자식 선택자  
+		    .parent > p
+		    <div class="parent"><p></p></div>
+		    
+		    
+		    7. 속성 선택자
+		    input[type=text] {color:red}
+		    
+		    
+		    8. + 인접한 형제 , ~ 일반형제
+		    
+		    9. 가상선택자
+		       a:link 의미 해석 
+		*/
+		
+	div p{color:green;font-family: "궁서체","명조세","광수체;"}
+	.parent > p {color:red;border: 1px double blue; padding: 10px; font-size: 15px;}
+	
+	input[type=text]{color:red;}
+	input[type=button] {font-size: 15px}
+	</style>
+</head>
+<body>
+	<p>나는 어떤 스타일 적용 될까</p>
+	<div>DIV태그</div>
+	<h3>하위 자손 선택자</h3>
+	<div>
+		<p>선택자</p>
+		<p>
+		   선택자2
+		   <p>선택자3</p>
+		</p>
+		<div>
+			<p>선택자4</p>
+		</div>
+		
+		<h3>자식 선택자</h3>
+		<div class="parent">
+			<p>문단태그</p>
+		</div>
+		<hr>
+		<input type="text" value="css적용">
+		<input type="button" value="css적용">
+	
+	</div>
+</body>
+</html>

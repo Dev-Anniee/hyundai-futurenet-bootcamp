@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>HTML5 Music Player</title>
+
+<style>
+body {
+    margin: 0;
+    background: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.player {
+    width: 420px;
+    margin: 50px auto;
+    background: #1e1e1e;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+}
+
+.album {
+    width: 220px;
+    height: 220px;
+    margin: auto;
+    border-radius: 16px;
+    background: #333;
+    overflow: hidden;
+}
+
+.album img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.info h2 {
+    margin: 5px 0;
+}
+
+.info p {
+    color: #aaa;
+}
+
+.progress-area {
+    margin-top: 20px;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #aaa;
+}
+
+#progress {
+    width: 100%;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.controls button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.play-btn {
+    background: #00c73c;
+    color: white;
+}
+
+.sub-controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.volume {
+    width: 120px;
+}
+
+.playlist {
+    margin-top: 25px;
+    background: #151515;
+    border-radius: 12px;
+    padding: 10px;
+}
+
+.playlist h3 {
+    margin: 10px;
+}
+
+.song {
+    padding: 12px;
+    border-bottom: 1px solid #333;
+    cursor: pointer;
+}
+
+.song:hover {
+    background: #2a2a2a;
+}
+
+.song.active {
+    background: #00c73c;
+    color: white;
+}
+</style>
+</head>
+
+<body>
+
+<div class="player">
+
+    <div class="album">
+        <img id="cover" src="cover1.jpg" alt="앨범 이미지">
+    </div>
+
+    <div class="info">
+        <h2 id="title">노래 제목</h2>
+        <p id="artist">가수명</p>
+    </div>
+
+    <audio id="audio"></audio>
+
+    <div class="progress-area">
+        <input type="range" id="progress" value="0" min="0" max="100">
+        <div class="time">
+            <span id="currentTime">00:00</span>
+            <span id="duration">00:00</span>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="prevSong()">⏮</button>
+        <button class="play-btn" onclick="togglePlay()" id="playBtn">▶</button>
+        <button onclick="nextSong()">⏭</button>
+    </div>
+
+    <div class="sub-controls">
+        <button onclick="toggleRepeat()" id="repeatBtn">반복 OFF</button>
+        <input class="volume" type="range" id="volume" min="0" max="1" step="0.1" value="0.7">
+    </div>
+
+    <div class="playlist">
+        <h3>재생목록</h3>
+        <div id="playlist"></div>
+    </div>
+
+</div>
+
+<script>
+const songs = [
+    {
+        title: "첫 번째 노래",
+        artist: "가수 A",
+        src: "music1.wav",
+        cover: "cover1.jpg"
+    },
+    {
+        title: "두 번째 노래",
+        artist: "가수 B",
+        src: "music2.wav",
+        cover: "cover2.jpg"
+    },
+    {
+        title: "세 번째 노래",
+        artist: "가수 C",
+        src: "music3.wav",
+        cover: "cover3.jpg"
+    }
+];
+
+const audio = document.getElementById("audio");
+const title = document.getElementById("title");
+const artist = document.getElementById("artist");
+const cover = document.getElementById("cover");
+const playBtn = document.getElementById("playBtn");
+const progress = document.getElementById("progress");
+const currentTimeEl = document.getElementById("currentTime");
+const durationEl = document.getElementById("duration");
+const volume = document.getElementById("volume");
+const playlistEl = document.getElementById("playlist");
+const repeatBtn = document.getElementById("repeatBtn");
+
+let currentIndex = 0;
+let isPlaying = false;
+let isRepeat = false;
+
+function loadSong(index) {
+    const song = songs[index];
+
+    title.textContent = song.title;
+    artist.textContent = song.artist;
+    cover.src = song.cover;
+    audio.src = song.src;
+
+    updatePlaylist();
+}
+
+function togglePlay() {
+    if (isPlaying) {
+        audio.pause();
+        playBtn.textContent = "▶";
+    } else {
+        audio.play();
+        playBtn.textContent = "⏸";
+    }
+
+    isPlaying = !isPlaying;
+}
+
+function nextSong() {
+    currentIndex++;
+
+    if (currentIndex >= songs.length) {
+        currentIndex = 0;
+    }
+
+    loadSong(currentIndex);
+
+    if (isPlaying) {
+        audio.play();
+    }
+}
+
+function prevSong() {
+    currentIndex--;
+
+    if (currentIndex < 0) {
+        currentIndex = songs.length - 1;
+    }
+
+    loadSong(currentIndex);
+
+    if (isPlaying) {
+        audio.play();
+    }
+}
+
+audio.addEventListener("timeupdate", () => {
+    if (!audio.duration) return;
+
+    progress.value = (audio.currentTime / audio.duration) * 100;
+
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    durationEl.textContent = formatTime(audio.duration);
+});
+
+progress.addEventListener("input", () => {
+    audio.currentTime = (progress.value / 100) * audio.duration;
+});
+
+volume.addEventListener("input", () => {
+    audio.volume = volume.value;
+});
+
+audio.addEventListener("ended", () => {
+    if (isRepeat) {
+        audio.currentTime = 0;
+        audio.play();
+    } else {
+        nextSong();
+    }
+});
+
+function toggleRepeat() {
+    isRepeat = !isRepeat;
+    repeatBtn.textContent = isRepeat ? "반복 ON" : "반복 OFF";
+}
+
+function formatTime(time) {
+    const min = Math.floor(time / 60);
+    const sec = Math.floor(time % 60);
+
+    return `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+}
+
+function updatePlaylist() {
+    playlistEl.innerHTML = "";
+
+    songs.forEach((song, index) => {
+        const div = document.createElement("div");
+
+        div.className = "song";
+        if (index === currentIndex) {
+            div.classList.add("active");
+        }
+
+        div.textContent = `${song.title} - ${song.artist}`;
+
+        div.onclick = () => {
+            currentIndex = index;
+            loadSong(currentIndex);
+            audio.play();
+            isPlaying = true;
+            playBtn.textContent = "⏸";
+        };
+
+        playlistEl.appendChild(div);
+    });
+}
+
+loadSong(currentIndex);
+audio.volume = 0.7;
+</script>
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>HTML5 Video Player</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#111;
+    font-family:Arial;
+    color:white;
+}
+
+.player-container{
+    width:1000px;
+    margin:30px auto;
+    background:#1e1e1e;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 0 30px rgba(0,0,0,0.5);
+}
+
+.video-area{
+    position:relative;
+    background:black;
+}
+
+video{
+    width:100%;
+    display:block;
+}
+
+.controls{
+    padding:15px;
+    background:#222;
+}
+
+.progress-area{
+    margin-bottom:15px;
+}
+
+#progress{
+    width:100%;
+}
+
+.time{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    color:#aaa;
+}
+
+.buttons{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.left-controls,
+.right-controls{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+button{
+    background:#333;
+    border:none;
+    color:white;
+    padding:10px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#555;
+}
+
+.volume{
+    width:100px;
+}
+
+.playlist{
+    background:#181818;
+    padding:15px;
+}
+
+.playlist-item{
+    padding:12px;
+    border-bottom:1px solid #333;
+    cursor:pointer;
+}
+
+.playlist-item:hover{
+    background:#2a2a2a;
+}
+
+.playlist-item.active{
+    background:#00c73c;
+}
+
+.title{
+    padding:15px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="player-container">
+
+    <div class="title" id="videoTitle">
+        HTML5 강의 영상
+    </div>
+
+    <div class="video-area">
+
+        <video id="video">
+            <source src="video1.mp4" type="video/mp4">
+        </video>
+
+    </div>
+
+    <div class="controls">
+
+        <div class="progress-area">
+
+            <input type="range" id="progress" value="0" min="0" max="100">
+
+            <div class="time">
+                <span id="currentTime">00:00</span>
+                <span id="duration">00:00</span>
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <div class="left-controls">
+
+                <button onclick="prevVideo()">⏮</button>
+
+                <button onclick="togglePlay()" id="playBtn">
+                    ▶
+                </button>
+
+                <button onclick="nextVideo()">⏭</button>
+
+                <button onclick="toggleMute()" id="muteBtn">
+                    🔊
+                </button>
+
+                <input
+                    type="range"
+                    class="volume"
+                    id="volume"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value="1"
+                >
+
+            </div>
+
+            <div class="right-controls">
+
+                <button onclick="toggleSpeed()">
+                    배속
+                </button>
+
+                <button onclick="toggleFullScreen()">
+                    전체화면
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="playlist" id="playlist"></div>
+
+</div>
+
+<script>
+
+const video = document.getElementById("video");
+
+const playBtn = document.getElementById("playBtn");
+
+const progress = document.getElementById("progress");
+
+const currentTimeEl =
+    document.getElementById("currentTime");
+
+const durationEl =
+    document.getElementById("duration");
+
+const volume =
+    document.getElementById("volume");
+
+const muteBtn =
+    document.getElementById("muteBtn");
+
+const videoTitle =
+    document.getElementById("videoTitle");
+
+const playlistEl =
+    document.getElementById("playlist");
+
+let isPlaying = false;
+
+let speed = 1;
+
+let currentIndex = 0;
+
+const videos = [
+
+    {
+        title:"HTML 강의",
+        src:"video1.mp4"
+    },
+
+    {
+        title:"CSS 강의",
+        src:"video2.mp4"
+    },
+
+    {
+        title:"JavaScript 강의",
+        src:"video3.mp4"
+    }
+];
+
+function loadVideo(index){
+
+    video.src = videos[index].src;
+
+    videoTitle.textContent =
+        videos[index].title;
+
+    updatePlaylist();
+}
+
+function togglePlay(){
+
+    if(isPlaying){
+
+        video.pause();
+
+        playBtn.textContent = "▶";
+
+    }else{
+
+        video.play();
+
+        playBtn.textContent = "⏸";
+    }
+
+    isPlaying = !isPlaying;
+}
+
+function nextVideo(){
+
+    currentIndex++;
+
+    if(currentIndex >= videos.length){
+
+        currentIndex = 0;
+    }
+
+    loadVideo(currentIndex);
+
+    video.play();
+
+    isPlaying = true;
+
+    playBtn.textContent = "⏸";
+}
+
+function prevVideo(){
+
+    currentIndex--;
+
+    if(currentIndex < 0){
+
+        currentIndex = videos.length - 1;
+    }
+
+    loadVideo(currentIndex);
+
+    video.play();
+
+    isPlaying = true;
+
+    playBtn.textContent = "⏸";
+}
+
+video.addEventListener("timeupdate", ()=>{
+
+    if(video.duration){
+
+        progress.value =
+            (video.currentTime /
+            video.duration) * 100;
+
+        currentTimeEl.textContent =
+            formatTime(video.currentTime);
+
+        durationEl.textContent =
+            formatTime(video.duration);
+    }
+});
+
+progress.addEventListener("input", ()=>{
+
+    video.currentTime =
+        (progress.value / 100)
+        * video.duration;
+});
+
+volume.addEventListener("input", ()=>{
+
+    video.volume = volume.value;
+});
+
+function toggleMute(){
+
+    video.muted = !video.muted;
+
+    muteBtn.textContent =
+        video.muted ? "🔇" : "🔊";
+}
+
+function toggleSpeed(){
+
+    speed += 0.5;
+
+    if(speed > 2){
+
+        speed = 0.5;
+    }
+
+    video.playbackRate = speed;
+
+    alert(speed + "배속");
+}
+
+function toggleFullScreen(){
+
+    if(video.requestFullscreen){
+
+        video.requestFullscreen();
+    }
+}
+
+function formatTime(time){
+
+    const min =
+        Math.floor(time / 60);
+
+    const sec =
+        Math.floor(time % 60);
+
+    return String(min).padStart(2,"0")
+        + ":"
+        + String(sec).padStart(2,"0");
+}
+
+function updatePlaylist(){
+
+    playlistEl.innerHTML = "";
+
+    videos.forEach((item,index)=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className = "playlist-item";
+
+        if(index === currentIndex){
+
+            div.classList.add("active");
+        }
+
+        div.textContent = item.title;
+
+        div.onclick = ()=>{
+
+            currentIndex = index;
+
+            loadVideo(currentIndex);
+
+            video.play();
+
+            isPlaying = true;
+
+            playBtn.textContent = "⏸";
+        };
+
+        playlistEl.appendChild(div);
+    });
+}
+
+video.addEventListener("ended", ()=>{
+
+    nextVideo();
+});
+
+loadVideo(currentIndex);
+
+</script>
+
+</body>
+</html>
