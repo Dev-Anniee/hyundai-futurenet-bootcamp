@@ -1,13 +1,45 @@
-# 디폴트 무시된 파일
-/shelf/
-/.idea/workspace.xml
-# 에디터 기반 HTTP 클라이언트 요청
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
-
-*.iml
-.idea/
+# =========================
+# Java / Build result
+# =========================
+target/
+build/
 out/
+*.class
+
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# =========================
+# Eclipse
+# =========================
+.classpath
+.project
+.settings/
+.apt_generated/
+.factorypath
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Local config / secret files
+# =========================
 3TierTask/src/kr/or/kosa/utils/properties
