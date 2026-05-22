@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    //제어문
+
+    const a = 8;
+    if(a % 2 == 0){
+        document.write("짝수");
+    }else{
+       document.write("홀수");
+    }
+    document.write("<hr>");
+
+    const c = 7;
+    if(c%2==0){
+      document.write("2의 배수");
+    } else if(c%3==0){
+      document.write("3의 배수");
+    } else {
+      document.write("2의 배수도 3의 배수도 아니다");
+    }
+
+    /*
+      int sum =0;
+      for(int i=1; i<=100; i++){
+      sum += i;}
+    */
+
+    let sum = 0;
+    for(let i=1; i<=100; i++){
+      sum += i;
+    }
+    console.log(sum);
+
+    //구구단 출력
+    document.write("<hr>");
+      for(let i=1; i<=9; i++){
+        for(let j=1; j<=9; j++){
+          document.write(i+"*"+j+"="+i*j+"&nbsp;&nbsp;");
+        }
+        document.write("<br>");
+      }
+  </script>
+</head>
+<body>
+  <button onclick="call()">클릭</button>
+</body>
+</html>

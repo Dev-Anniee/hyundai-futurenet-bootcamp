@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    let name = "hong"; //global 변수
+    function call(){
+      let age = 20; //local 변수
+      console.log("당신의 이름은 : " + name + " 나이는" + age);
+    }
+    /*
+    *  1.  변수 생성 > 값 입력 > 타입 생성 (number, String, boolean, date)
+    * var a;
+    * let b;
+    *
+    * a=10; 타입 결정 -> number
+    * b = "A"; 타입 결정 -> String
+    * c = 'B'; " ", ' ' 둘다 동일하게 사용, 교차로 사용한다
+    *
+    * ES5 문법까지는 val global, local
+    * ES6 (ECMA) : 2015 > let, const
+    *
+    * 아직까지도 혼재 :  var, let, const
+    * 신규 개발 : let, const 권장
+    *
+    * 초기화 (변수가 처음 값을 갖는 것)
+    * javascript (정수, 실수, boolean, 문자열, 날짜)
+    * 내부적으로 타입 (number, boolean, string, Array, Object)
+    * */
+    let n;
+    console.log(n); // 정의 되지 않았다 -> undefined
+
+    // 사용하기 전에 값을 초기화
+    n = 100;
+    let i,j;
+    i=100; j=200; //number 타입으로
+    const result = i + j; //초기화
+    console.log(result);
+
+    let intnum =10; //number
+    let dnum = 12.3456; // number
+    let flag = true; // boolean
+    let str = null; // object
+    let str2 = "ABC"; // string
+
+    console.log(typeof intnum);
+    console.log(typeof dnum);
+    console.log(typeof flag);
+    console.log(typeof str);
+    console.log(typeof str2);
+
+    //javascrit 연산자
+    //산술 , 논리 , 관계 연산자
+    let num1 = 10;
+    let num2 = 3;
+    document.write((num1/num2) + "<br>");
+    document.write((num1%num2) + "<br>");
+
+
+    //관계연산
+    // == 값비교(true , false) javascript  :  ===(값도 같고 [타입] 같아야 true)
+    let a = 3;
+    let b = 5;
+    console.log(a == b); //false
+    console.log(a != b); //true
+    console.log(a > b); //false
+
+    //논리
+    console.log((10 > 5) && (1 != 3)); //true && true > true
+    console.log((10 < 5) || (1 != 3)); //false || true > true
+
+    //삼항연산자
+    let result2 = (4%2 == 0) ?  "짝수":"홀수";
+    console.log(result2);
+
+    //대입연산자 (+= , -= , *= . /=)
+    let p = 10;
+    let k = 5;
+    p+=k; //p = p + k
+    console.log(p);
+
+
+    let x = 5 + 5;
+    let y = "5" + 5; // + 산술 , 결합
+    console.log(x);
+    console.log(y);  //"55" 결합
+
+    let v = "5";
+    let v2 = 5;
+    let v3 = 5;
+
+    console.log(v == v2); //값을 비교
+    console.log(v === v2); //값도 같고 typeof 같니
+    console.log(v2 === v3);
+
+  </script>
+</head>
+<body>
+  <button onclick="call()">클릭</button>
+</body>
+</html>

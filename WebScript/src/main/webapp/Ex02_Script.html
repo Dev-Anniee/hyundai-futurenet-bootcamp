@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		/*
+			javascript 수많은 객체 와 함수는 (웹 브라우져 내장 )
+
+			1. 많이 사용하는 객체는 (new 적용 .. 객체)
+			2. new Date()
+		*/
+		window.document.write("방가방가<br>");
+
+		//window (x)
+		document.write("window 객체 생략 가능<br>");
+
+		console.log("디버깅 , 결과 미리보기 , 오류 메시지 확인");
+		console.log(10+10);
+
+		//var , let , const
+
+		//Javascript 면접 :
+		//front 필수질문 : 호이스팅
+		var num; //타입이 정해져 있지 않아요
+		//그리고 당신이 필요하면 값을 넣어  ... 그때 타입이 설정되
+		console.log(num);  //undefined 예외가 아니고 정상메시지
+		num = 10; //값을 가지는 순간 타입이 결정
+
+		console.log("num : " + num);
+		console.log(typeof(num));  //number
+
+		let str = "world";
+		console.log(str);
+		console.log(typeof(str)); //string
+
+		//POINT (초급자)
+		//javascript 순서대로 실행
+
+		//let element = document.forms[0].elements[0];
+		//console.log(element);  //<input type="text"     name="userid" value="hong111">
+		//console.log(element.value);
+
+		function data(){
+			let element = document.forms[0].elements[0];
+			alert(element);
+		}
+
+	</script>
+</head>
+<body>
+<form action="#" method="get" name="myform">
+	<input type="text"     name="userid" value="hong"><br>
+	<input type="password" name="pwd"    value="1004"><br>
+	<input type="submit" value="전송">
+</form>
+
+<input type="button" value="함수호출" onclick="data()">
+
+</body>
+<script>
+	//시점은 body 안에 form 태그 DOM 객체 (Tree) 메모리에 올라간 뒤에 실행
+	let element = document.forms[0].elements[0];
+	console.log(element);  //<input type="text"     name="userid" value="hong111">
+	console.log(element.value);
+
+	let value = window.document.myform.userid.value;
+	console.log("value : " + value);
+
+	if(value.length < 5) {
+		alert("다시 입력해");
+		element.value="";
+	}
+
+</script>
+</html>

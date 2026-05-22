@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            JAVA
+            함수 단독 
+            class Emp { method 안에} 
+
+            public void print(){}
+            public String print(return "";)
+            public int print(int num , int num2) {return num + num2}
+
+
+            javascript 함수 
+            단독 존재 가능
+            function print(){}
+            function print(){return ""}
+            function print(num, num2) {return num + num2}
+
+        */
+        function callConfirm(){ //사용자 정의 함수
+            if(window.confirm("삭제할까요")){  //confirm 내장함수
+                alert("네"); //내장함수
+            }else{
+                alert("아니오"); //내장함수
+            }
+        }
+
+        /*
+            전통적인 popup 창
+            window.open(URL, name, specs, replace)
+        */
+
+        function showPopup(){
+            window.open("Ex06_popup.html", "zipcode","width=200,height=200");
+        }
+
+        /*
+        현재의 팝업 제어
+        https://www.w3schools.com/bootstrap5/tryit.asp?filename=trybs_modal&stacked=h
+
+        */
+       function myFunc(){
+           let popupwindow= window.open("Ex06_popup.html", "zipcode","width=200,height=200");
+
+           // popupwindow 팝업창
+           popupwindow.document.write("<p>this is zipcode</p>");
+        }
+
+        function goUrlTime(url){
+            window.setTimeout("location.href='"+ url + "'",3000);  //초
+            //location.href='http://www.naver.com' 
+            //새로운 페이지 요청 
+        }    
+
+        //java public int myCallFunc(int i , int j , int k) {return i+j+k;}
+        function myCallFunc (i , j , k){
+            return i+j+k;
+        }
+       // myCallFunc(10,20,30);
+
+       //javascript 이름없는 함수 (익명함수) ***^^^
+       //이름이 없어요 (한번만 쓰겠다 , 재사용하지 않겠다)
+       //function 이름() {} , 
+       //function() {} 익명함수
+
+       changeColor = function() {
+          window.document.bgColor = 'silver';
+          window.document.fgColor = "red";
+       }
+
+    </script>
+</head>
+<body>
+    <h3>내장함수 , 사용자 정의 함수 사용하기</h3>
+    <button onclick="callConfirm()">클릭 사건 발생(함수호출)</button><br>
+    <button onclick="showPopup()">전통적인 팝업</button><br>
+    <button onclick="myFunc()">팝업 제어</button><br>
+    <button onclick="goUrlTime('http://www.daum.net')">3초 뒤에</button><br>
+    <button onclick="changeColor()">이름없는 함수(익명함수 호출)</button>
+</body>
+</html>

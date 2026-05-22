@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function print(){
+            //DOM script 접근방식
+            let element = document.getElementById("demo");
+            console.log(element);
+            element.innerHTML = "<b>아 졸립다 금요일</b>";
+
+            //box : p, div 속성으로 value (x)  > 태그 안쪽 >  innerHTML, innerText
+        }
+
+        //결론적으로 DOM script 집중! document.getElementById("demo");
+        //https://www.w3schools.com/js/js_htmldom_methods.asp
+
+        /*
+        Method description
+        document.getElementById(id)	Find an element by element id
+        document.getElementsByTagName(name)	Find elements by tag name
+        document.getElementsByClassName(name)	Find elements by class name
+        document.querySelector(selector)	Find the first element that matches a CSS selector
+        document.querySelectorAll(selector)	Find all elements that match a CSS selector
+         */
+
+    </script>
+</head>
+<body>
+    <button onclick="print()">클릭하세요</button>
+    <p id = "demo">
+        demo 라는 id는  p태그를 식별하는 값
+    </p>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>모달 팝업 실습</title>
+
+<style>
+
+/* 전체 페이지 */
+body{
+    font-family: Arial;
+    margin:0;
+    padding:30px;
+}
+
+/* 열기 버튼 */
+.open-btn{
+    padding:12px 25px;
+    font-size:18px;
+    border:none;
+    background-color:royalblue;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* 모달 배경 */
+.modal{
+    position:fixed;
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,0.5);
+    display:none;
+    justify-content:center;
+    align-items:center;
+}
+
+/* 팝업 내용 */
+.modal-content{
+    width:400px;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    text-align:center;
+
+    animation:popup 0.3s;
+}
+
+/* 애니메이션 */
+@keyframes popup{
+
+    from{
+        transform:scale(0.5);
+        opacity:0;
+    }
+
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+
+}
+
+/* 닫기 버튼 */
+.close-btn{
+    margin-top:20px;
+    padding:10px 20px;
+    border:none;
+    background:red;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>모달 팝업 실습</h1>
+
+<button class="open-btn" onclick="openModal()">
+    팝업 열기
+</button>
+
+<!-- 모달 -->
+<div class="modal" id="modal">
+    <!-- 팝업 내용 -->
+    <div class="modal-content">
+        <h2>공지사항</h2>
+        <p>
+            JavaScript 모달 팝업 실습입니다.
+        </p>
+        <p>
+            window.open() 없이 구현
+        </p>
+        <button class="close-btn" onclick="closeModal()">
+            닫기
+        </button>
+    </div>
+</div>
+
+<script>
+/* 모달 열기 */
+function openModal(){
+    document.getElementById("modal").style.display
+        = "flex";
+}
+
+/* 모달 닫기 */
+function closeModal(){
+    document.getElementById("modal").style.display
+        = "none";
+}
+
+/* 배경 클릭 시 닫기 */
+window.onclick = function(event){
+    let modal = document.getElementById("modal");
+    if(event.target == modal){
+        closeModal();
+    }
+}
+
+</script>
+
+</body>
+</html>

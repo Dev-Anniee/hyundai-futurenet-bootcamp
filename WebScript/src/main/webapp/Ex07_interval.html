@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            https://www.w3schools.com/jsref/met_win_setinterval.asp
+
+
+            myInterval = setInterval(function, milliseconds);
+            clearInterval(myInterval);
+
+            setInterval(function(){} , 3000);
+            3초 마다 function(){} 를 실행하겠다 
+            ***** callback() 함수 ******  비동기 처리 
+            프로그램 논리에 의해서 자동 호출 되는 함수
+
+            function call() {}
+            setInterval(call(),3000);
+
+            call함수 setInterval 만 사용 (익명함수)
+
+             setInterval(function(){},3000);
+
+             1. 익명함수(일회성) : 재사용 하지 않을 거야 (function() {})
+             2. callback 포괄적인 개념 (프로그램 논리에 의해서 자동호출 되는 함수)
+            
+        */
+        let myTimer = window.setInterval(function(){
+            let d = new Date();
+            let t = d.toLocaleTimeString();
+            document.getElementById("time").innerHTML = t;
+        },1000);
+
+        function myTimerStop(){
+            window.clearInterval(myTimer); 
+        }
+    </script>
+</head>
+<body>
+        <p id="time"></p>
+        <button onclick="myTimerStop()">stop time</button>
+</body>
+</html>

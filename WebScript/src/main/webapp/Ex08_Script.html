@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            1. 유효성 검증
+            1.1 유효성 검증 frontend 맞나요 아니면 backend 맞나요 아니면 기준이 있나요
+            가능한 모든 검증 frontend 끝
+            >>DB관련 유효성 (ID 중복) : 비동기 
+
+            >>서버의 요청은 최소로 줄이자 ...성능...
+            >>요청 전체 페이지의 로딩이 아니라 부분페이지 로딩 (비동기 : ajax )
+
+            spring Framework 자동화 (약속)
+            MVC 
+            테이블 컬럼명 : class member field : input 태그 name="" 동일하다면 자동화 가능
+            empno             private int empno         <input name="empno"
+        */
+        function send() {
+            const useruid = document.loginform.txtuserid;
+            console.log(useruid);
+            console.log(useruid.value);
+
+            //id 있으면 name="txtpwd" id="txtpwd"  편하다
+            //document.querySelector(선택자)
+            const pwd = document.getElementById("txtpwd"); 
+            console.log(pwd);
+            console.log(pwd.value);
+            	
+            	
+        	 //일반적으로 정규표현식 (표준)
+            if(useruid.value =="" || !(useruid.value.length >= 3 && useruid.value.length <= 10)){
+                alert("다시 입력해");
+                document.loginform.txtuserid.focus();
+                useruid.select(); //커서가 가고 블럭
+            }else{
+                alert("검증 완료");
+                //서버로 전송
+                document.loginform.action="Ex08_ok.jsp";
+                document.loginform.submit(); //input type submit
+            }
+        	 
+        	 
+        	 
+        	/*
+        	원하는 유효성은 정규표현식으로 구현하자 (권장사항)
+            let reg = /^[a-zA-Z0-9]{3,10}$/;
+            if(!reg.test(useruid.value)){
+                alert("아이디를 다시 입력하세요");
+                useruid.focus();
+                useruid.select();
+
+            }else{
+                alert("검증 완료");
+                // 서버 전송
+                document.loginform.action = "Ex08_ok.jsp";
+                document.loginform.submit();
+
+            }
+        	
+        	
+        	*/
+        	 
+   	    }
+           
+    </script>
+</head>
+<body>
+        <form action="" method="get" name="loginform">
+            ID : <input type="text" name="txtuserid">
+            PWD: <input type="password" name="txtpwd" id="txtpwd">  
+            <input type="button" value="서버전송" onclick="send()">          
+        </form>
+</body>
+</html>
