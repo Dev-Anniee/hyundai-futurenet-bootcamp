@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    let checkFlag = false;
+    function checkForm(){
+      let list = document.myform.list; // imput type checkbox 배열
+      if(!checkFlag){
+        for(let index in list){
+          console.log(list[index].checked);
+          list[index].checked = true;
+        }
+        checkFlag = true;
+        return "[선택해제]";
+      }
+      
+      else{
+        for(let index in list){
+          list[index].checked = false;
+        }
+        checkFlag = false;
+        return "[전체선택]";
+      }
+    }
+  </script>
+</head>
+<body>
+  <form action="" name="myform">
+    좋아하는 과목은 : <br>
+    <input type="checkbox" name="list" value="java" >JAVA<br>
+    <input type="checkbox" name="list" value="oracle">ORACLE<br>
+    <input type="checkbox" name="list" value="html">HTML<br>
+    <input type="checkbox" name="list" value="css">CSS<br>
+    <input type="checkbox" name="list" value="script">SCRIPT<br>
+    <input type="button" value="[전체선택] " onclick="this.value=checkForm()"><br>
+    <br> <input type="button" value="[선택해제]" 	onclick=""><br>
+  </form>
+</body>
+</html>

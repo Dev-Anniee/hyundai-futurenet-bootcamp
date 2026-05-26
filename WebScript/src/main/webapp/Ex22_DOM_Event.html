@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            let btnobj = document.getElementById("btngetdata");
+
+            btnobj.onclick = function(){
+                let txtmsg = document.getElementById("txtmessage");
+                let str="";
+                str += "ID : " + txtmsg.getAttribute("id");
+                str += " VALUE : " + txtmsg.getAttribute("value");
+                console.log(str);
+            }
+
+            document.getElementById("btncreate").onclick = function(){
+                //태그 만들기 → 속성 넣기 → 화면에 붙이기
+                let txtname = document.createElement('input');
+                txtname.setAttribute("type","text");
+                txtname.setAttribute("id","txtbox");
+                txtname.setAttribute("value","홍길동");
+
+                document.body.appendChild(txtname);
+            }
+        }
+    </script>
+</head>
+<body>
+    <input type="text" id="txtmessage" value="hello">
+    <input type="button" id="btngetdata" value="getInfo">
+    <hr>
+    <input type="button" id="btncreate" value="동적생성">
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    // onload 이벤트가 발생하는 시점
+    // DOM 객체 생성 후에
+    //
+    // 1. <body onload="call()">
+    // 2. window.onload = call()
+    // 3. window.onload = function(){} //익명함수 나만 사용
+
+    window.onload = function () {
+      //함수는 모든 요소가 memory DOM 생성이 끝난 후에 호출됨을 보장
+      let out = "";
+      out+= "<ul>";
+        out+= "<li>A</li>";
+        out+= "<li>B</li>";
+      out+= "</ul>";
+      document.body.innerHTML = out;
+      //DOM > 동적 > 기존에 없던 태그 추가 > 있는 것을 삭제 > 있는 것을 변경
+      const header = document.createElement("h1");
+      // header > <h1></h1>
+      const textNode = document.createTextNode("hello");
+      header.appendChild(textNode);
+      //header > <h1>hello</h1>
+      document.body.appendChild(header); // 자식 등록
+
+      header.setAttribute("src", "");
+      // img 태그를 동적으로 만들고 src 속성도 동적으로 추가하고
+      // images/w3schools.jpg 사진을 넣고 body의 자식요소로 append
+
+      let img = document.createElement("img");
+      // <img>
+      img.setAttribute("src","images/w3schools.jpg");
+      // <img src="images/w3school.jpg">
+      img.setAttribute("width","150");
+      img.setAttribute("height","150");
+      // <img src="images/w3school.jpg" width="150" height="150">
+
+      document.body.appendChild(img)
+
+    }
+  </script>
+</head>
+<body>
+  HELLO WORLD
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    function eventProductor(frm){
+      //onchange="eventProductor(this)"  > frm > select 태그 전체
+      //onchange="eventProductor(this.form)  > this > document > <form name="frmdata">
+
+      console.log(frm);
+      console.log(frm.productor.value);
+      console.log(frm.productor.text);
+
+      //Point  : select 태그는 option 배열로 가지고 있다
+      console.log("index:" + frm.productor.selectedIndex);
+      //[<option..][<option..][<option..]
+      console.log(frm.productor.options[0].value);
+      console.log(frm.productor.options[0].text);
+
+      let index = frm.productor.selectedIndex;
+      let value = frm.productor.options[index].value;
+      let text = frm.productor.options[index].text;
+
+      if(index==0){
+        frm.valProductor.value = "";
+        frm.txtProductor.value = "";
+      }else{
+        frm.valProductor.value = value;
+        frm.txtProductor.value = text;
+      }
+
+      console.log(frm.valProductor.value);
+      console.log(frm.txtProductor.value)
+    }
+  </script>
+</head>
+<body>
+  모델별 최저가 검색
+  <br>
+  <form name="frmdata">
+    <select style="width: 200px" name="productor" onchange="eventProductor(this.form)">
+<!--      내부적으로 배열로 관리-->
+      <option value="A000" selected>제조사</option>
+      <option value="A001">삼성전자</option>
+      <option value="A002">LG전자</option>
+      <option value="A003">Apple</option>
+      <option value="A004">Dell</option>
+    </select>
+    <input type="text" name="valProductor" size="10">
+    <input type="text" name="txtProductor" size="10"> <br>
+  </form>
+</body>
+</html>

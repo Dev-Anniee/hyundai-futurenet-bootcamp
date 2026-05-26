@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+  /*
+  JAVA 정적 - 배열의 크기 고정
+  int[] arr = new int[10];
+  줄이거나 늘리려면 > 새로운 배열
+
+  Collection (클래스 제공)
+  List<String> list = new ArrayList<>();
+  list.add() 추가
+
+  js 배열 : 동적 배열 (Collection)
+  js는 자료구조 : stack
+
+  let arr = [];
+  arr.push();
+  arr.pop();
+  LIFO 구조
+  */
+
+  let arr = [10,20,30];
+  for(let i=0; i<arr.length; i++){
+    document.write(arr[i] + "<br>");
+  }
+
+  //좋은 냄새가 나는 코드~!
+  let arr = [];
+
+  //나쁜 냄세가 나는 코드~!
+  let eng = new Array(3);
+  let array = new Array(5);
+  let array2 = new Array(1,2,3);
+
+  arr.push(10); //지향하기
+  arr.push(20);
+  arr.push(30);
+
+  document.write(arr.pop());
+
+  </script>
+</head>
+<body>
+
+</body>
+</html>

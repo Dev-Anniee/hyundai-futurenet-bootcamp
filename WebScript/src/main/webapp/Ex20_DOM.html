@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .democlass {color: red;}
+  </style>
+</head>
+<body>
+<div id="div">
+  <h1 class="democlass">Hello world_1</h1>
+  <h1 class="democlass">Hello world_2</h1>
+  <h1 class="democlass">Hello world_3</h1>
+</div>
+</body>
+<script>
+  /*
+  document.getElementsByTagName("h1")[0].removeAttribute('class');
+  let harray = document.getElementsByTagName("h1");
+  console.log(harray); //배열
+
+  for(let i = 0 ; i < harray.length ; i++){
+      console.log(harray.length);
+      harray[i].removeAttribute('class');
+  }
+  */
+
+  /*
+  문제가 있는 코드
+   let array = document.getElementsByTagName("h1");
+   for(let index in array){
+       console.log(array[index]);
+       document.getElementById("div").removeChild(array[index]);
+   }
+       삭제 다 됐는지 확인 :
+       Hello world_2 남아있어요
+
+       삭제: 0 -> 1 -> 2
+
+       처음
+       i=0, length=3
+       [0]                [1]                     [2]
+        Hello world_1      Hello world_2          Hello world_3
+
+       index = 0 삭제
+       → Hello world_1 삭제
+
+       i=1, length=2
+       [0]                [1]                     [2]
+       Hello world_2      Hello world_3
+
+       index = 1 삭제
+       → Hello world_3 삭제
+
+       i=2, length=1
+       [0] Hello world_2
+
+        결과:
+        Hello world_2는 [1]에서 [0]으로 당겨졌는데,
+        반복은 다음 index로 넘어가서 삭제되지 않고 남는다.
+
+       해결 - 모두 지우려면?
+       뒤에서 부터 지운다
+  */
+
+  /*
+  자기자신을 삭제하는 remove()
+  let array = document.getElementsByTagName("h1");
+  let len = array.length;
+
+  for(let i = 0 ; i < len ; i++){
+     array[array.length-1].remove();  // 3[2] , 2[1] , 1[0]
+  }
+  */
+
+  const parent = document.getElementById("div"); // id="div"인 요소를 가져오는 코드
+  const list = parent.getElementsByTagName("h1"); // parent 안에 있는 <h1> 태그들을 전부 가져오는 코드
+  console.log(list);
+  for(let i = list.length - 1; i >= 0 ; i--){ //뒤에서 부터 삭제
+    console.log("i : " + i);
+    parent.removeChild(list[i]);
+  }
+
+</script>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    // 자바 스크립트는 완벽한 객체지향언어이다! (재사용성, 상속, 다형성)+ 파이썬도
+    // javascript 다양한 객체 (내장객체) : 웹 브라우저 내장하고 있다
+    // 1. new를 통해
+    // 2. 사용하기 편하게 new 없이 객체 제공
+
+    let today = new Date(); //만들어진 생성자 호출, Date today = new Date();
+    console.log(today);
+    console.log(today.getFullYear()); //다양한 함수 기능
+    console.log(today.getMonth()+1);
+    console.log(today.getDate());
+    console.log(today.getHours());
+    console.log(today.getMinutes());
+    console.log(today.getSeconds());
+
+    // java static 함수 (많이 사용하니까, 편하게) > 객체 생성 필요 없음
+    console.log(Math.random()); // 범위 : 0<= 범위 < 1
+    console.log(parseInt(Math.random()*45)+1);
+
+    console.log(Math.round(3.5678)); // 정수 4
+    console.log(Math.max(3,5,8,101,666)); // 666 출력
+
+    //POINT 문자열
+    let str = "ABCDEF";
+
+    //document.write();
+    with(document){
+      write(str.substring(1,2)+"<br>"); //B
+      write(str.substring(1)+"<br>");
+
+      //POINT : 개선된 for 문
+      /*
+      JAVA
+      for(String str : arr){}
+
+      JAVASCRIPT
+      for(let index in arr){} index를 얻는다, arr[index]로 접근
+      for(let value of arr){} vaule를 얻는다
+       */
+
+      let strarr = "A B C D";
+      let arr = strarr.split(" ");
+      write(arr) //Array > Object 상속 > toString() Array 재정의
+      //A, B, C, D
+
+      write("<br>");
+      for(let index in arr){
+        write(index + "-"+ arr[index]+" ");
+      }
+      write("<br>");
+      for(let value of arr){
+        write(value+" ");
+      }
+    }
+  </script>
+</head>
+<body>
+
+</body>
+</html>

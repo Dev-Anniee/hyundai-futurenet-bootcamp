@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    /* 사건이 발생했을 때 행위(함수)를 구현하면 된다 -> handler
+    Here is a list of some common HTML events:
+
+    Event	Description
+    onchange	  An HTML element has been changed (select 태그)
+    onclick	    The user clicks an HTML element (button 계열)
+    onmouseover	The user moves the mouse over an HTML element
+    onmouseout	The user moves the mouse away from an HTML element
+    onkeydown	  The user pushes a keyboard key (키보드)
+    onload	    The browser has finished loading the page (반드시, 페이지에 올라온 모든 요소가 돔객체 형태로 로딩이 끝났을 때)
+    POINT : 이벤트가 발생한 후에는 모든 요소는 돔 객체의 형태로 메모리에 존재한다 -> 어떤 곳이든 접근 가능하다
+    body 안에 모든 요소가 웹 브라우져 메모리에 로딩되고 난 후 사건이 발생 onload
+
+    onfocus : input 태그에 포커스가 되었을 때
+    onblur : input 태그에서 포커스가 벗어났을 때
+    */
+    function bodyLoad() {
+      console.log('body loaded');
+      const data = document.myform.money.value;
+      console.log(isNaN(data)); //false -> 숫자
+      }
+      function focusFunc(){ //input 태그 커서 들어오면
+        document.getElementById("myinput").style.backgroundColor = "gold";
+      }
+      function blurFunc(){ //input 태그 커서 떠나면
+        document.getElementById("myinput").style.backgroundColor = "white";
+      }
+      function selectTag(){
+        const value = document.myform.sel.value;
+        alert(value);
+      }
+
+      //자바 스크립트 잘하는 사람 특징 : this를 잘 활용한다(요소 자신), event 객체 (target, currentTarget), Array
+      //let, const, var
+        function changeColor(obj){ //변수 이름만 사용, 타입이 없다
+          console.log(obj);
+          obj.style.backgroundColor = "gold";
+        }
+        function changeColor2(obj){ //변수 이름만 사용, 타입이 없다
+          console.log(obj);
+          obj.style.backgroundColor = "white";
+        }
+        // this를 통해 input element 전체를 파라미터로 받는다
+
+  </script>
+</head>
+<body onload="bodyLoad()">
+<!--아래 내용의 모든 요소를 로딩하고 난 후 bodyLoad 함수가 실행된다.-->
+  <form action="#" name="myform">
+    <input type="text" id="myinput" name="myinput" onfocus="focusFunc()"  onblur="blurFunc()">
+    <br>
+    <select name="sel" onchange="selectTag()">
+      <option value="A">AA</option>
+      <option value="B">BB</option>
+      <option value="C">CC</option>
+      <option value="D">DD</option>
+    </select>
+    <br>
+    <input type="text" onmouseover="changeColor(this)" onmouseout="changeColor2(this)">
+
+    <input type="text"><br>
+    <input type="text" value="1000" name="money">
+  </form>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+           //DOM 계층트리 : node 개념(부모 , 자식 , 형제 개념 자원접근 )
+
+           let meNode;
+           meNode = document.getElementById("me"); //<div id="me">C</div>
+           meNode.style.backgroundColor="gold";
+
+           let parentnode = meNode.parentNode; //body
+               parentnode.style.backgroundColor="blue";
+
+           let grandNode = parentnode.parentNode; //html
+               grandNode.style.backgroundColor="green";
+
+           let my = document.getElementById("mychild"); 
+           // <ul id="mychild"><li>AA</li><li>BB</li><li>CC</li></ul>
+           console.log(my);
+           console.log(my.firstChild.nodeName);  //LI
+           console.log(my.firstChild.innerText);  //AA
+
+           //value 속성이 없는 친구들 : div , p , li , span
+           //innerText 또는 innerHTML   <div><h1>안에있는 값<h1></div>
+
+            console.log(my.firstChild.nextSibling.innerText);  //BB
+
+            console.log(my.hasChildNodes); //true
+            console.log(my.childNodes); // [li, li, li]
+            console.log(my.childNodes.length); //3
+            console.log(my.childNodes[0]); //배열 첨자 접근 [index] -> <li>AA</li>
+        }
+    </script>
+</head>
+<body>
+   	<div>A</div><div>B</div><div id="me">C</div><div>D</div><div>E</div>
+    <ul id="mychild"><li>AA</li><li>BB</li><li>CC</li></ul>
+</body>
+</html>
