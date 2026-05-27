@@ -60,7 +60,7 @@ class DropShip extends Unit{
 
 }
 
-public class Ex02_Abstract_class {
+public class Ex02_Abstract_Class {
     public static void main(String[] args) {
         Tank tank = new Tank();
         tank.move(10, 20);
