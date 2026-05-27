@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        let array = ['포도','사과'];
+        console.log(array.toString()); 
+        console.log(array);
+
+        //출력
+        //for  (일반 , in ,  of)
+        for(let i = 0 ; i < array.length ;i++){
+            console.log(array[i]);
+        }
+
+        for(let index in array){
+            console.log(array[index]);
+        }
+
+        for(let value of array){
+            console.log(value);
+        }
+
+        //let array = ['포도','사과'];
+        array[2] = "바나나"; //bad
+        console.log(array.toString + " / " + array.length);
+
+        // ['포도','사과','바나나'];
+
+        array[10] = "애플망고"; //bad
+        console.log(array.toString() + " / " + array.length);
+        //권장하지 않아요
+
+        //권장
+        //Best
+        let array3 = [];
+        array3.push("AA");
+        array3.push("BB");
+
+        console.log(array3.pop());
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+</head>
+<body>
+    <p id="demo"></p>
+    <p id="demo2"></p>
+</body>
+ <script>
+        //https://www.w3schools.com/js/js_arrow_function.asp 참고 자료
+
+        //화살표 함수 (줄임....)
+
+        //일반함수
+        //function foo(){}
+
+        //익명함수
+        let foo = function() {  //javascript : 함수(일급객체) (함수를 변수에 할당)
+            console.log("foo...");
+        }
+
+        //실행방법
+        foo();
+
+        //2015 ES6 줄임 표현 (Arrow Function)
+        let bar = () => console.log("bar...");
+        bar();
+
+        //매개변수 1개  return 
+        let foo2 = x => x;   // let foo2 = functon(x) {return x;}
+        const data = foo2(100);
+
+        let hello;
+        hello = val => "hello"+val; // let hello = function(val) {return "hello" + val}
+        const v = hello(" world");
+        console.log(v); // hello world
+
+        //매개변수가 2개 이상인 경우부터
+        //function call(a,b) or  function call(a,b,c,d)
+        //let foo3 = (a,b) => { return a+b;};
+        let foo3 = (a,b) => a+b;
+        const v2 = foo3(10,20);
+        console.log(v2);
+
+        //만약에 함수안에 여러개의 논리가 필요하다면 (if , switch)
+        let foo4 = (a,b) => {
+            let c = 100;
+            return a+b+c;
+        }
+
+        //응용
+        //함수가 return 하는 자원인 json 객체라면
+        let foo5 = () => ({a:1 , b:2 , c:3});        //{{}} (x)
+        const obj = foo5();
+        console.log(obj); //json 객체
+
+        //즉시 실행 함수 ()
+        (
+            function(){
+                console.log("즉시 실행 함수");
+            }
+        )();
+
+        /*
+        (
+            ()=>console.log("즉시 실행 함수");
+            
+        )();
+        */
+
+        /*
+            https://www.w3schools.com/JSREF/jsref_foreach.asp
+            배열에 관련된 다양한 함수
+
+            forEach(1) , isArray , map(2) , filter , 
+
+        */
+  </script>
+</html>

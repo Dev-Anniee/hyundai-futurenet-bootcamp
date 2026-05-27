@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<h3>DOM 슬라이드</h3>
+<img src="images/1.jpg" alt="이미지" id="imgs" width="200" height="200">
+<hr>
+<a href="#" id="prv">이전</a>||<a href="#" id="next">다음</a>
+</body>
+<script>
+
+  let myPhotos = ["images/1.jpg" , "images/2.jpg" , "images/3.jpg" , "images/4.jpg"];
+
+  let index = 0; //global 모든 함수에서 사용가능
+
+  /*
+  click 이벤트 2개 (adddEventListener, callback함수 (익명함수))
+  <a href="#" id="prv">이전</a>
+  <a href="#" id="next">다음</a>
+
+  이미지를 보여주는 슬라이드(DOM)
+  */
+
+  document.getElementById("prv").addEventListener("click", function(){
+    index--;
+    if(index < 0) index = myPhotos.length - 1;
+    document.getElementById("imgs").src = myPhotos[index];
+  })
+  document.getElementById("next").addEventListener("click", function(){
+    index++;
+    if(index >= myPhotos.length) index = 0;
+    document.getElementById("imgs").src = myPhotos[index];
+  })
+</script>
+</html>

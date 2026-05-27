@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    let myObj = {"name":"john","age":30,"city":"seoul"};
+    console.log(myObj);
+
+    //클라이언트 (JSON) -> 서버로 전송
+    //json 데이터 -> 문자열 -> 받아서 다시 객체로
+
+    //JSON.parse() : JSON 문자열을 자바스크립트 객체로 변환
+    //JSON.stringify() : 자바스크립트 객체를 JSON 문자열로 변환
+
+    let stringObj = JSON.stringify(myObj);
+    console.log(stringObj);
+    console.log(typeof stringObj);
+    //{"name":"john","age":30,"city":"seoul"}
+
+    let stringStr = '{"name":"john","age":30,"city":"seoul"}';
+    console.log(stringStr);
+    console.log(typeof stringStr);
+
+    let myJson = JSON.parse(stringStr);
+    console.log(myJson);
+    console.log(myJson.name); //객체.속성명
+    console.log(myJson['name']); //객체["속성명"]
+
+    /*
+       index.htm or index.html
+       css : common.css
+       javascript : common.js
+       json : common.json > 형식(MIME)  > application/json
+       xml  : common.xml
+
+     */
+
+    let myCars;
+
+    myCars = {"name":"john" , "age":30 , "cars": [
+        {"name":"Ford","model":["Mustang","Focus"]},
+        {"name":"BMW" ,"model":["520","x5","x6"]},
+        {"name":"Fiat","model":["500","panda"]}
+      ]
+    };
+
+    console.log(myCars);
+    console.log(myCars.name);
+    console.log(myCars.cars); //return Array
+
+
+    //John 가지고 있는 차량의 이름, 모델명 다 출력하세요
+    for(let index in myCars.cars){
+      document.write("차량이름 : " + myCars.cars[index].name);
+      for(let i in  myCars.cars[index].model ){
+        document.write("차량모델 : " + myCars.cars[index].model[i]);
+      }
+      document.write("<hr>");
+    }
+
+[
+  {
+    "id": 1,
+    "title": "Spring Boot REST API 질문 있습니다.",
+    "writer": "kim",
+    "content": "REST API 응답 구조를 어떻게 설계하면 좋을까요?",
+    "category": "백엔드",
+    "createdAt": "2026-05-27",
+    "views": 123,
+    "likes": 12,
+    "isNotice": false,
+    "attachments": [
+      {
+        "fileId": 1,
+        "fileName": "api-response-sample.png",
+        "fileSize": 248000
+      }
+    ],
+    "comments": [
+      {
+        "commentId": 101,
+        "writer": "admin",
+        "content": "보통 status, message, data 구조를 많이 사용합니다.",
+        "createdAt": "2026-05-27 10:30",
+        "likes": 3
+      },
+      {
+        "commentId": 102,
+        "writer": "lee",
+        "content": "ResponseEntity를 활용해보세요.",
+        "createdAt": "2026-05-27 11:10",
+        "likes": 1
+      }
+    ],
+    "replies": [
+      {
+        "id": 11,
+        "parentId": 1,
+        "title": "RE: Spring Boot REST API 질문 있습니다.",
+        "writer": "park",
+        "content": "저는 공통 ResponseDTO를 만들어 사용합니다.",
+        "createdAt": "2026-05-27",
+        "views": 45,
+        "likes": 5,
+        "comments": [
+          {
+            "commentId": 201,
+            "writer": "kim",
+            "content": "예제 코드도 볼 수 있을까요?",
+            "createdAt": "2026-05-27 13:00",
+            "likes": 0
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "React 상태관리 추천 부탁드립니다.",
+    "writer": "lee",
+    "content": "Redux, Zustand, Context API 중 어떤 것이 좋을까요?",
+    "category": "프론트엔드",
+    "createdAt": "2026-05-26",
+    "views": 98,
+    "likes": 8,
+    "isNotice": false,
+    "attachments": [],
+    "comments": [
+      {
+        "commentId": 103,
+        "writer": "choi",
+        "content": "작은 프로젝트는 Zustand가 간단합니다.",
+        "createdAt": "2026-05-26 09:20",
+        "likes": 4
+      },
+      {
+        "commentId": 104,
+        "writer": "admin",
+        "content": "전역 상태가 많으면 Redux Toolkit도 좋습니다.",
+        "createdAt": "2026-05-26 09:40",
+        "likes": 2
+      }
+    ],
+    "replies": [
+      {
+        "id": 12,
+        "parentId": 2,
+        "title": "RE: React 상태관리 추천 부탁드립니다.",
+        "writer": "yoon",
+        "content": "Zustand는 코드가 짧아서 초급자 수업에 좋습니다.",
+        "createdAt": "2026-05-26",
+        "views": 36,
+        "likes": 6,
+        "comments": []
+      },
+      {
+        "id": 13,
+        "parentId": 2,
+        "title": "RE: Redux Toolkit도 추천합니다.",
+        "writer": "kang",
+        "content": "실무 대형 프로젝트에서는 Redux Toolkit 경험도 필요합니다.",
+        "createdAt": "2026-05-26",
+        "views": 52,
+        "likes": 7,
+        "comments": [
+          {
+            "commentId": 202,
+            "writer": "lee",
+            "content": "Redux Toolkit 예제도 공부해보겠습니다.",
+            "createdAt": "2026-05-26 15:30",
+            "likes": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Oracle JOIN 연습문제 공유",
+    "writer": "park",
+    "content": "EMP, DEPT 테이블을 활용한 JOIN 문제입니다.",
+    "category": "DB",
+    "createdAt": "2026-05-25",
+    "views": 210,
+    "likes": 25,
+    "isNotice": false,
+    "attachments": [
+      {
+        "fileId": 2,
+        "fileName": "oracle-join-practice.sql",
+        "fileSize": 12000
+      }
+    ],
+    "comments": [
+      {
+        "commentId": 105,
+        "writer": "student01",
+        "content": "LEFT JOIN과 INNER JOIN 차이가 헷갈립니다.",
+        "createdAt": "2026-05-25 14:00",
+        "likes": 2
+      }
+    ],
+    "replies": []
+  }
+]
+  </script>
+</head>
+<body>
+
+</body>
+</html>

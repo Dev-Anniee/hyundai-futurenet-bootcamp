@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script>
+    // https://www.w3schools.com/jsreF/met_document_addeventlistener.asp
+    //  element.addEventListener(event, function,Capture)
+    // 이벤트 전파를 제어할 수 있다
+    //
+    // capture	Optional (default = false).
+    // true - The handler is executed in the capturing phase.
+    // false - The handler is executed in the bubbling phase.
+    //
+    // 장점 하나의 요소에 여러개의 이벤트를 걸 수 있고, 필요없다면 이벤트 제거 할 수도 있다
+    // (추가) addEventListener
+    // (제거) removeEventListener
+  </script>
+</head>
+<body>
+  <button id ="myBtn">Try</button>
+  <p id="demo"></p>
+</body>
+<script>
+  document.getElementById("myBtn").addEventListener("click", displayDate);
+  //주의사항 : addEventListener("click",displayDate()) 불가
+  function displayDate() {
+    document.getElementById("demo").innerHTML = new Date();
+  }
+</script>
+</html>

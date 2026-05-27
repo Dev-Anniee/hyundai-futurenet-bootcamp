@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<button class="btn">Click me</button>
+</body>
+	<script type="text/javascript">
+	
+	   //querySelector 선택자 (CSS 선택자 ...)
+		const btn  =document.querySelector('.btn'); //getEle...id값 
+		/*
+		btn.onclick = function(){
+			alert("button clicked 1");
+		}
+		btn.onclick = function(){
+			alert("button clicked 2");
+		}
+		*/
+		//같은 이벤트를 onclick 으로 걸면 마지막 이벤트만 처리 ...
+	
+		btn.addEventListener('click',function(){
+			alert("button clicked 1");
+		});
+		
+		btn.addEventListener('click',function(){
+			alert("button clicked 2");
+		});
+		
+	</script>
+</html>
