@@ -43,6 +43,7 @@ Thumbs.db
 # Local config / secret files
 # =========================
 3TierTask/src/kr/or/kosa/utils/properties
-/.metadata/
+.metadata/
 WebScript/Servers/
 WebScript/.metadata/
+WebScript_ES6/.metadata/
