@@ -44,6 +44,9 @@ Thumbs.db
 # =========================
 3TierTask/src/kr/or/kosa/utils/properties
 .metadata/
+*/.metadata/
+*/Servers/
 WebScript/Servers/
+WebScript_ES6/Servers/
 WebScript/.metadata/
 WebScript_ES6/.metadata/
