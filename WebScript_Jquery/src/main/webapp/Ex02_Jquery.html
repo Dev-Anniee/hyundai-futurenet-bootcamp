@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <title>Document</title>
+    <script>
+           //페이지가 DOM 객체 형태로 메모리이 로딩 되었다 (보장_)
+           //window.onload(function(){})
+
+           $(document).ready(function(){
+                $('#btn').click(function(){
+                    $(this).hide();
+                });
+           });
+    </script>
+</head>
+<body>
+    <input type="button" id="btn" value="버튼">
+</body>
+</html>

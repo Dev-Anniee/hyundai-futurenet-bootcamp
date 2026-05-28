@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            ES6 향상된 객체 리터럴
+            (Enhanced Object Literal) : JSON
+
+            객체 표기를 좀더 간결하게
+        */
+        const dataObj = {
+            language:"javascript",
+            coding:function(){
+                console.log(this.language + " ... coding");
+            }
+        };
+
+        const language = "java";
+        const dataObj2 = {language} 
+        //풀어쓰면 : const dataObj2 = {language:language}  
+        //key 하고 value 같으면 생략하고 하나만 펴기
+        //객체 표기 {key:value}
+
+        //vue , react
+        const dataObj3 = {
+            coding:function(){
+                console.log("hello world coding");
+            }
+        }
+        dataObj3.coding();
+
+        // 축약 : react , vue
+        //위 코드 dataObj3 = { ...
+         const dataObj4 = {
+            coding(){   //coding:function(){ 코드를 축약 (함수의 축약) ..그냥 함수를 사용하자 a(){}
+                console.log("hello world coding");
+            }
+        }
+        dataObj4.coding();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

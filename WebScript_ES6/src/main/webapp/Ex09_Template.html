@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+            Template Literal
+            자바스크립트에서 문자열을 입력하는 형식 정의
+            ES6 백틱 (back-tick) `${}`
+        */
+
+        const str = "hello world";
+        const str2= `hello world`;
+
+        // JAVA System.out.printf("{0} - {1}",hello,world);
+        
+        //백틱 없어도 문제 없어요
+        /*
+        const lang = "javascript";
+        const expression = "i love " + lang + "!!!";
+        console.log(expression);
+        */
+       //format 형식활용
+        const lang = "javascript";
+        //const expression = `i love ${lang} !!!`;
+        const expression = `i love ${lang.split('').reverse().join('')}`;
+        console.log(expression);
+
+        const arr = ["바람" , "비" , "물"];
+        console.log(arr.join('-'));
+        //바람-비-물
+
+        const user4 = {
+            name:"순신",
+            age:30
+        }
+
+        const userData = `사랑하는 ${user4.name} 는 이제 ${user4.age} 입니다`;
+        console.log(userData);
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

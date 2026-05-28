@@ -79,5 +79,96 @@
             forEach(1) , isArray , map(2) , filter , 
 
         */
+
+        // 26.05.28~
+        /*
+        초급자 (암기)
+        1. for(let i = 0 ; i < 10 ; i++){}
+        2. for(let index in Array) { Array[index] }
+        3. for(let value of Array) { value}
+
+        객체(JSON)
+        JSON {a:1, b:2 , c:3}
+        1. for(let key in Object) {Object[key]}   ex) 객체["a"] return 1
+        2. const obj = {a:1} >> (객체.속성명) obj.a return 1
+
+        추가적으로
+        1.Array.isArray()
+        2.Array.forEach(function(value,index,array){})  배열.forEach
+        3.Array.map() > 새로운 배열 조작()형태의 배열을 리턴
+        4.array.filter(function(currentValue, index, arr), thisValue)  return 배열 
+        */
+
+        function myFunc(){
+          const data = ["A", "B", "C", "D"];
+          let x =document.getElementById("demo2");
+          x.innerHTML  = Array.isArray(data);
+        }
+
+        //호출
+        myFunc();
+
+        let txt = "";
+        const numbers = [45,5,8,46,25];
+        //Array.forEach(function(value, index, array){...})
+
+        function myFunc2(value, index, array){
+          txt = "("+value+")"+"["+index+"]"+"["+array+"]";
+          console.log(txt);
+        }
+
+        //POINT
+        numbers.forEach(myFunc2); //return ...
+        /*
+           (45)[0][45,5,8,,46,25]
+           (5)[1][45,5,8,,46,25]
+           (8)[2][45,5,8,,46,25]
+           (46)[4][45,5,8,,46,25]
+           (25)[5][45,5,8,,46,25]
+        */
+
+        const numbers2 = [65,88,5,13];
+        const newArr = numbers2.map(function(value, index, array){
+          return value*10+index; //가공된 값을 배열로 (새로운 배열)
+        });
+        console.log(newArr);
+        //[650,881,52,133]
+
+
+        //응용하기
+        let evens = [2,4,6,8];
+        /*
+        let odds = evens.map(function(value){
+            return value + 1;
+        });
+        */
+        //화살표 함수 (callback 함수 구현 : 화살표 함수 사용 )
+        let odds = evens.map(value => value + 1);
+        console.log(odds);
+
+        /*
+        let nums = evens.map(function(value,index){
+                    return value+index;
+        });
+        */
+
+        //화살표 함수
+        let nums = evens.map((value,index)=>value+index);
+
+        let arr = [];
+        evens.forEach(value =>{
+          if(value%2===0)
+            arr.push(value);
+        });
+
+        //조작된 새로운 배열이 필요하다면 map()
+
+        const ages = [32, 33, 16, 40];
+        const result = ages.filter(checkAdult); //DB where age >= 18
+
+        function checkAdult(age) {
+          return age >= 18;
+        }
+        console.log(result);
   </script>
 </html>

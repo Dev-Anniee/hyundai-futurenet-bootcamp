@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        Spread Operator
+        펼침 연산자 (복제가능)
+
+        특정객체 or 배열값을 > 다른 객체 or 배열로 복제하거나 옭길때 편하게 사용
+
+        연산자: ...
+
+        */
+
+        const obj = {
+            a:10,
+            b:20
+        }
+        let newObj = {...obj}; //펼침 연산자 : 복제
+
+        console.log(newObj);
+
+        const arr = [1,2,3];
+        let newArr = [...arr];
+
+        console.log(newArr);
+
+        //배열 , 객체 , 문자열 요소를 분해하거나 합치는 사용
+        
+        const arr3 = [1,2,3];
+        const arr4 = [4,5,6];
+
+        const combineArray = [...arr3,...arr4];
+        console.log(combineArray); //[1,2,3,4,5,6]
+
+        //객체
+        const obj3 = {name:"길동"};
+        const obj4 = {age:25};
+        const combineObj = {...obj3,...obj4};
+        //combineObj {name:"길동",age:25}
+
+        //많이 쓰는 방법 (*)
+        const person = {name:"김유신",age:40};
+        const updatePerson = {...person,city:"seoul"};
+        console.log(updatePerson);
+
+        let user = {
+            name:"길동",
+            age:21,
+            city:"busan",
+        }
+
+        //변경 *****
+        //user 객체의 age 속성의 값을 10으로 변겨한 객체 하나 생성
+        //단 조건은 ... spread Operator 연산자 사용
+        // ... 연산자는 기존 있는 속성 : overwrite , 기존에 동일한 속성이 없으면 : append
+
+        let user2 = {...user,age:10,hobby:"aa"};
+        console.log(user2);
+
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

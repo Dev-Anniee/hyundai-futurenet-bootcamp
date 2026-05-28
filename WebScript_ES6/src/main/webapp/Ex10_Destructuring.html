@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script>
+    /*
+        Destructuring
+        ES6 구조 분해 할당
+
+        배열 할당하는 방법
+
+    */
+
+   const arr = [1,2,3,4];
+   const obj = {a:10 , b:20 , c:30};
+
+   const {a,b,c} = obj;
+   console.log(a);
+   console.log(b);
+   console.log(c);
+   
+   const smith = {
+		   lang:"javascript",
+		   position:'front-end',
+		   area:"kangnam",
+		   hobby:"baseball",
+		   age:90
+   };
+   
+   const {lang,position,area,hobby,age} = smith;
+   console.log(lang);
+   console.log(position);
+   
+   //배열
+   const numbers = [11,22,33];
+   const [first ,second , third] = numbers;
+   console.log(first);
+   
+   const numbers3 = [1,2,3,4,5];
+   const [,,third3,fourth3] = numbers3;
+   console.log(third3); //3
+   console.log(fourth3);//4
+   
+   /*
+   기존
+   const person = {
+		    name: "홍길동",
+		    age: 20
+		};
+
+	const name = person.name;
+	const age = person.age;
+    -------------------------------
+    const person = {
+    	    name: "홍길동",
+    	    age: 20
+    	};
+
+    const { name, age } = person;  //중요 : 이름이 중요 (그리고 순서도) (동일한 이름으로 구조 분해 할당)
+    //const { n, a } = person;  (x) 안되요
+    console.log(name);
+    console.log(age);
+   
+    ----------------------------------
+    
+    const arr = [10,20];
+
+    const [a,b] = arr;
+
+    console.log(a);
+    console.log(b);
+    
+    ----------------------------------
+    react 코드
+    import { useState } from "react";
+
+    function Counter() {
+
+       const [count, setCount] = useState(0);
+
+       return (
+          <div>
+             <h1>{count}</h1>
+
+             <button
+                onClick={() => setCount(count + 1)}
+             >
+                증가
+             </button>
+          </div>
+       );
+    }
+   */
+
+</script>
+</body>
+</html>
