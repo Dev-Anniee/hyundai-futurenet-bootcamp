@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <title>Document</title>
+  <script>
+    // $(document).ready(function(){
+
+    //  });
+    $(function(){  // $(document).ready(
+      $('#btncopy').click(function(){
+        $('#txtcopyuserid').val($('#txtuserid').val());
+      });
+
+      $('#select_hobby').change(function(){
+        const text = $(':selected').text();
+        console.log(text);
+
+        const text2 = $('#select_hobby option:selected').text();
+        console.log(text2);
+
+        const value = $('#select_hobby').val();
+        console.log(value);
+      });
+
+      $('#txtpwd2').keyup(function(){
+        if($('#txtpwd').val() != $('#txtpwd2').val()){
+          $('#message').html('<h3>암호가 일치하지 않습니다.</h3>');
+        }else{
+          $('#message').html('<h3>암호가 일치합니다.</h3>');
+        }
+      })
+
+    });
+
+  </script>
+</head>
+<body>
+<p>Jquery hover(mouseover , mouseleave)</p>
+
+ID:<input type="text" id="txtuserid">
+<hr>
+<input type="button" id="btncopy" value="copy">
+<hr>
+Copy ID:<input type="text" id="txtcopyuserid">
+
+<hr>
+<select id="select_hobby">
+  <option value="JAVA">java</option>
+  <option value="SCRIPT">script</option>
+  <option>jdbc</option> <!--  value가 없으면 text가 value-->
+</select>
+<br>
+<input type="text" id="txtselect">
+<hr>
+<table style="border: 1px solid red;">
+  <tr>
+    <td>암호</td>
+    <td>
+      <input type="text" id="txtpwd" size="20" maxlength="5">
+    </td>
+  </tr>
+  <tr>
+    <td>암호확인</td>
+    <td>
+      <input type="text" id="txtpwd2" size="20" maxlength="5">
+    </td>
+  </tr>
+</table>
+<div id="message" style="color: red"></div>
+</body>
+</html>

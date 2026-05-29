@@ -6,19 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Document</title>
-    <script>
-            $(document).ready(function(){
-               //https://www.w3schools.com/jquery/jquery_ref_selectors.asp
-               //selector 에 대한 이해는 (css , javascript , jquery) 접근을 쉽게 해준다
+		<script>
+			$(document).ready(function(){
+				//https://www.w3schools.com/jquery/jquery_ref_selectors.asp
+				//selector 에 대한 이해는 (css , javascript , jquery) 접근을 쉽게 해준다
+				//모든 요소는 memory에 올라가 있다
+				//jquery function selecter
+				$('body > *').css('color',"gold");
+				$('div > *').css('color','red');
+				$('input[type=text]').css('color','green');
 
-               //모든 요소는 memory에 올라가 있다
+				/*
+			 DOM script : p ,div  > innerHTML , innerText (value 속성이 없는 것)
+			 input 태그들은 value 속성을 가지고 있다
+			 ex) document.getElementById("name").value
 
-               //jquery function selecter
-               $('body > *').css('color',"gold");
+			 Jquery 3총사
+			 val() , text() , html() >> 값을  read , write >> getter ,setter
 
+			 val('홍길동') > write(setter)
+			 val() > read(getter)
 
-            });
-    </script>
+			 $('#userid').val() > read
+			 $('#userid').val("world") > write
+
+		 */
+				$('input[type=text]').val('99999');  //writer
+
+				//jquery 하고 javascript 혼합사용해도 될까요 (당근)
+				setTimeout(()=>{
+					const value = $('select > option:selected').val();
+					alert("select tag value : " + value);
+				},3000);
+
+			});
+		</script>
 </head>
 <body>
     <div>

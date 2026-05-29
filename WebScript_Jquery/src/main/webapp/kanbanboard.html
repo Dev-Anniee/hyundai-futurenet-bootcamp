@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <title>Kanban Board</title>
+</head>
+<body>
+
+<header>
+  <h1>Kanban Board for Developers</h1>
+</header>
+
+<div class="header">
+  <select id="type">
+    <option value="Feature">Feature</option>
+    <option value="Bug">Bug</option>
+  </select>
+  <input type="text" id="title" placeholder="Title">
+  <input type="text" id="description" placeholder="Description">
+  <button id="addBtn">Add</button>
+  <button id="clearAll">전체삭제</button>
+</div>
+
+<div class="kanban-container">
+  <div class="column" id="BACKLOG"><h3>BACKLOG</h3></div>
+  <div class="column" id="TO DO"><h3>TO DO</h3></div>
+  <div class="column" id="IN PROGRESS"><h3>IN PROGRESS</h3></div>
+  <div class="column" id="TESTING"><h3>TESTING</h3></div>
+  <div class="column" id="DONE"><h3>DONE</h3></div>
+</div>
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+/* 1. 레이아웃 기본 설정 */
+.kanban-container { display: flex; gap: 10px; margin-top: 20px; }
+.column {
+  flex: 1; min-height: 400px; background: #f4f4f4; padding: 10px;
+  border: 1px solid #ddd; /* 오타 수정 */
+}
+
+/* 2. 카드 기본 스타일 */
+.card {
+  background: white; padding: 10px; margin-bottom: 10px;
+  border-left: 5px solid #ccc; width: 250px;
+  box-sizing: border-box; cursor: grab;
+}
+
+/* 카드 타입별 색상 */
+.Feature { border-left-color: orange; }
+.Bug { border-left-color: red; }
+
+/* 3. 드래그 중인 카드 스타일 */
+.ui-draggable-dragging {
+  z-index: 9999; /* 화면의 가장 앞쪽에 보이도록 우선순위를 최상위로 설정 */
+  width: 250px; /* 드래그 시 너비가 줄어들지 않도록 250px로 고정 */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3); /* 그림자 효과를 주어 카드에 입체감(떠 있는 느낌) 부여 */
+  cursor: grabbing; /* 마우스 커서를 '잡고 있는 손' 모양으로 변경 */
+  opacity: 0.9; /* 드래그 중인 카드를 살짝 투명하게 처리 (90% 불투명도) */
+}
