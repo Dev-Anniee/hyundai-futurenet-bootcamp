@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+
+<!--  전역 자원을 생성 가능
+      context-parm 누가 read 할까
+      Application 객체 read 할 수 있다!
+
+      설정이 수정되면 무조건 재시작, 재구동
+-->
+  <context-param>
+      <description>이 설명은 개발자의 마음입니다</description>
+      <param-name>email</param-name>
+      <param-value>kosa@kosa.or.kr</param-value>
+  </context-param>
+  <context-param>
+    <description>기본 파일 업로드 경로</description>
+    <param-name>filePath</param-name>
+    <param-value>C:\\Webjsp\\upload</param-value>
+  </context-param>
+
+  <!--
+   	예외 처리에 대한 page 설정
+   	1. 상태코드 : 500 ,  404  , 403
+   	2. 상세하게 예외 별도 (NullPoint ..> 페이지 , IndexOutOf ..> 페이지
+     -->
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error/Error500.jsp</location>
+  </error-page>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error/Error404.jsp</location>
+  </error-page>
+</web-app>
