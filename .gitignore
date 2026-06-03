@@ -54,5 +54,5 @@ WebScript_ES6/.metadata/
 WebScript_ES6/src/main/webapp/META-INF/
 WebScript_ES6/web/
 WebScript_Jquery/src/main/webapp/META-INF/
-kr/or/kosa/utils/properties
+**/kr/or/kosa/utils/properties
 *.MF
