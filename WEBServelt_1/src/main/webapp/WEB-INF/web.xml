@@ -1,0 +1,22 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
+  <display-name>WEBServlet_1</display-name>
+  <welcome-file-list>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <!--
+      요청 주소 생성 (servlet) > 서버에 주소가 요청되면 > java > 컴파일  > 실행
+      -->
+  <servlet>
+    <servlet-name>simplecontroller</servlet-name>
+    <servlet-class>com.SimpleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>simplecontroller</servlet-name>
+    <url-pattern>/simple</url-pattern>
+  </servlet-mapping>
+  <!--
+         localhost:8080/WEBServlet_1/simple  최초 요청 컴파일 실행
+         localhost:8080/WEBServlet_1/simple  재요청 실행만 (class 생성)
+         그런데 요청의 method 각 GET > doGET() 자동실행  , POST > doPOST() 자동실행
+       -->
+</web-app>
