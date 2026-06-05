@@ -6,8 +6,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import kr.or.kosa.action.Action;
+import kr.or.kosa.action.ActionForward;
+import kr.or.kosa.service.MemoAddService;
 import kr.or.kosa.service.MemoService;
-
 import java.io.IOException;
 
 
@@ -37,8 +39,10 @@ public class FrontController extends HttpServlet {
     	//1. command    ?cmd=list
     	//2. url        /list.do 마지막 주소로 판단
     	
-    	//request.setCharacterEncoding("UTF-8"); 필터를 이용해 처리
-      //필요가 없다 (filter를 설정했으므로)
+    	//request.setCharacterEncoding("UTF-8");
+    	//필요가 없다 (filter) 설정
+    	//request.setCharacterEncoding(this.encoding);
+    	
     	String requestUri = request.getRequestURI();
     	String contextPath = request.getContextPath(); //사이트명
     	String urlCommand = requestUri.substring(contextPath.length());  
@@ -46,17 +50,53 @@ public class FrontController extends HttpServlet {
     	//localhost:8080/WEBJSP/list.do   >> /list.do
     	//URL
     	System.out.println("urlCommand = " + urlCommand);
+    	
+    	/*
+    	  FrontController 처리 방법
+    	  기준(약속 , 표준)
+    	  
+    	  화면 >
+    	  처리 > (DB 처리 + 이동)
 
-      /*
-      FrontController 처리 방법
-      기준 (약속, 표준)
-
-      화면 >
-      처리 > (DB처리 + 이동)
-       */
-
-
-      String viewPage;
+    	 */
+    	
+    	  Action action = null;
+    	  ActionForward forward = null;
+    	  
+    	  if(urlCommand.equals("/MemoAdd.do")) { //글쓰기 처리
+    		  //UI + 로직
+    		  action = new MemoAddService();
+    		  action.execute(request, response);
+    		  
+    	  }else if(urlCommand.equals("/MemoView.do")) {
+    		  //UI
+    		  forward = new ActionForward();
+    		  forward.setRedirect(false);
+    		  forward.setPath("/WEB-INF/views/memoview.jsp");
+    	  }else if(urlCommand.equals("/MemoUpdate.do")) {
+    		   action = new MemoAddService();
+    		   action.execute(request, response);
+    	  }else if(urlCommand.equals("/login.do")) {
+    		  //UI
+    		  forward = new ActionForward();
+    		  forward.setRedirect(false);
+    		  forward.setPath("/WEB-INF/views/login.jsp");
+    	  }
+    	  
+    	  if(forward != null) {
+    		  if(forward.isRedirect()) {
+    			  response.sendRedirect(forward.getPath());
+    		  }else {
+    			  RequestDispatcher dis = request.getRequestDispatcher(forward.getPath());
+    		     dis.forward(request, response);
+    		  }
+    	  }
+    	
+    	
+    	
+    	
+    	
+    	   String viewPage;
     	
     	   switch (urlCommand) {
            case "/memo.do":

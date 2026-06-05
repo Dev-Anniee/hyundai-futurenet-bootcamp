@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <!-- Tomcat DBCP 리소스 설정입니다. -->
+    <Resource maxWait="-1" maxIdle="20" maxActive="20" password="1004" username="KOSA" url="jdbc:oracle:thin:@localhost:1521/XEPDB1" driverClassName="oracle.jdbc.OracleDriver" type="javax.sql.DataSource" auth="Container" name="jdbc/oracle" />
+    <Resource maxWait="-1" maxIdle="20" maxActive="100" password="1004" username="Myuser" url="jdbc:mysql://192.168.0.3:3306/mydb" driverClassName="com.mysql.jdbc.Driver" type="javax.sql.DataSource" auth="Container" name="jdbc/mysql" />
+</Context>
