@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Flickr JSONP 검색</title>
+    <style>
+        img {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            margin: 8px;
+        }
+    </style>
+    <script>
+        window.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("search");
+            const btn = document.getElementById("btn");
+            const images = document.getElementById("images");
+
+            //자동 호출하는 콜백 함수
+            window.jsonFlickrFeed = function (data) {
+                images.innerHTML = "";
+
+                data.items.forEach(function (item) {
+                    const img = document.createElement("img");
+                    img.src = item.media.m;
+                    img.alt = item.title;
+                    images.appendChild(img);
+                });
+            };
+
+            btn.addEventListener("click", function () {
+                const query = searchInput.value.trim();
+
+                if (query === "") {
+                    alert("검색어를 입력하세요.");
+                    return;
+                }
+
+                const oldScript = document.getElementById("flickrScript");
+
+                if (oldScript) {
+                    oldScript.remove();
+                }
+
+                const script = document.createElement("script");
+                script.id = "flickrScript";
+                script.src =
+                    "https://api.flickr.com/services/feeds/photos_public.gne" +
+                    "?tags=" + encodeURIComponent(query) +
+                    "&tagmode=any" +
+                    "&format=json";
+
+                document.body.appendChild(script);
+            });
+        });
+    </script>
+</head>
+<body>
+<input type="text" id="search" placeholder="예: 싸이, 라쿤 등">
+<input type="button" value="검색하기" id="btn">
+<div id="images"></div>
+</body>
+</html>

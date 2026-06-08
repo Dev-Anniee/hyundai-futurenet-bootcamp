@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    /*
+     jquery 제공하는 비동기 함수
+     https://api.jquery.com/
+
+     Ajax
+     1. Global Ajax Event Handlers (10%)
+     2. Helper Functions(10%)
+     3. Low-Level Interface  $.ajax() 모든 옵션을 당신...넣으세요
+     4. Shorthand Methods  (기본 기능이 내장된 다양한 비동기 함수 제공)
+          load() , get() , post() , getJSON()
+
+
+       .load( url [, data ] [, complete ] )
+      url
+      Type: String
+      A string containing the URL to which the request is sent.
+
+      data
+      Type: PlainObject or String
+      A plain object or string that is sent to the server with the request.
+
+      complete
+      Type: Function( String responseText, String textStatus, jqXHR jqXHR )
+      A callback function that is executed when the request completes.
+      서버에서 응답이 오면 자동 callback (readState == 4)
+          textStatus > 문자열 > success  , error 판단
+
+          load 함수
+          1.서버에서 받는 데이터가 (html , text) 방식
+          2.Client 에서 정의한 특정 요서에 매핑할 목적 (자동 innerHTML ...)
+
+    */
+    $(function(){
+      $('#btn').click(function(){
+        //비동기 처리
+        $('#display').load("Ex10_Server.jsp",
+            {"msg":$('#msg').val()},
+            function(responseText, txtStatus , xhr){
+              if(txtStatus == "success"){
+                console.log("응답" + responseText)
+              }else{
+                //404 , 500 , 403
+                console.log(xhr.status);
+              }
+
+
+            });
+      });
+    });
+  </script>
+</head>
+<body>
+<h3>비동기처리</h3>
+<input type="text" name="msg" id="msg">
+<input type="button" id="btn" value="비동기전송">
+<div id="display"></div>
+</body>
+</html>

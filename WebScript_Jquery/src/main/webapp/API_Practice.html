@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>국민연금공단 기금 포트폴리오 현황</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      const SERVICE_KEY = 'f%2Fu2s%2FBRz%2BCgJg9%2FwjzhGfs13pTiECCbxzvZj3zBmBlz7WeRFD2MtJDHoPrdpD35ZuGNePI2BbAXaq2%2FXRunYQ%3D%3D';
+      const API_LIST = {
+        "2026-02-28": "https://api.odcloud.kr/api/15106894/v1/uddi:365e3f72-e17e-4b10-a6ef-db2587ac3ee0",
+        "2026-01-31": "https://api.odcloud.kr/api/15106894/v1/uddi:ee961d8a-32ff-4564-8733-fc1be360ea16",
+        "2025-12-31": "https://api.odcloud.kr/api/15106894/v1/uddi:62b32157-1438-430d-9145-b29ada288e6b",
+        "2025-11-30": "https://api.odcloud.kr/api/15106894/v1/uddi:21294cf5-01db-4d34-bcbe-92460145f5d0",
+        "2025-10-31": "https://api.odcloud.kr/api/15106894/v1/uddi:05bb565d-a67a-4faa-a579-8abf0b69e227",
+        "2025-09-30": "https://api.odcloud.kr/api/15106894/v1/uddi:268f4dda-9169-4c5a-a0d0-97aeda936181",
+        "2025-08-31": "https://api.odcloud.kr/api/15106894/v1/uddi:daff99b4-866b-47f0-b9e3-ac3ae64e4946",
+        "2025-07-31": "https://api.odcloud.kr/api/15106894/v1/uddi:2c73b8b4-b580-46cd-aec3-87f848976798",
+        "2025-06-30": "https://api.odcloud.kr/api/15106894/v1/uddi:4cffe087-edc6-44c8-a90e-9adadaa4b5bb",
+        "2025-05-31": "https://api.odcloud.kr/api/15106894/v1/uddi:c4d6ba7c-c8d8-457c-9084-b2a6eb3c68ec",
+        "2025-04-30": "https://api.odcloud.kr/api/15106894/v1/uddi:635a5f3a-507c-4faf-8408-a04b61123a06",
+        "2025-03-31": "https://api.odcloud.kr/api/15106894/v1/uddi:afde37f7-7d92-46d4-8448-901d5299de28",
+        "2025-02-28": "https://api.odcloud.kr/api/15106894/v1/uddi:5c1c6455-b2fa-4d1e-b34d-e8fcdee34c55",
+        "2025-01-31": "https://api.odcloud.kr/api/15106894/v1/uddi:6f2fd166-785b-4372-a306-ae9e676f512a",
+        "2024-12-31": "https://api.odcloud.kr/api/15106894/v1/uddi:bc5d04c0-0b01-47be-a59c-dacda4b5eefc",
+        "2024-11-30": "https://api.odcloud.kr/api/15106894/v1/uddi:ccaf362d-4912-448f-864f-e9e38f3c9d91",
+        "2024-10-31": "https://api.odcloud.kr/api/15106894/v1/uddi:8f5247cd-c847-4712-9784-bdaebc2d988d",
+        "2024-09-30": "https://api.odcloud.kr/api/15106894/v1/uddi:2c71e7d3-57bb-49df-9274-fc97cadd26ee",
+        "2024-08-31": "https://api.odcloud.kr/api/15106894/v1/uddi:ab7ff214-cc40-47fe-857a-d9b1372baafc",
+        "2024-07-31": "https://api.odcloud.kr/api/15106894/v1/uddi:51f008e6-f30f-46fb-a0fb-98b714f9a54f",
+        "2024-06-30": "https://api.odcloud.kr/api/15106894/v1/uddi:a56fe677-e79f-4a9f-992a-ed38890940be",
+        "2024-05-31": "https://api.odcloud.kr/api/15106894/v1/uddi:b27d8827-5e4f-4cd5-84c5-e58e5ad5b95c",
+        "2024-04-30": "https://api.odcloud.kr/api/15106894/v1/uddi:5860c0a8-d4f3-474d-8641-cf01e9f8a146",
+        "2024-03-31": "https://api.odcloud.kr/api/15106894/v1/uddi:b3a25d79-f61f-4697-a05c-f7d6468258ef",
+        "2024-02-29": "https://api.odcloud.kr/api/15106894/v1/uddi:17bd781e-1dbc-41fb-aa9a-fd8900cf47fc",
+        "2024-01-31": "https://api.odcloud.kr/api/15106894/v1/uddi:b45c430d-f757-4bfa-86f8-d48d7a1e02ed",
+        "2023-12-31": "https://api.odcloud.kr/api/15106894/v1/uddi:434337f0-5f1f-4efa-b9b9-c5e0180d73d7",
+        "2023-11-30": "https://api.odcloud.kr/api/15106894/v1/uddi:37b6d95d-5fc9-4a5a-8d7a-c96a4e204fcd",
+        "2023-10-31": "https://api.odcloud.kr/api/15106894/v1/uddi:7e21345b-608f-40da-939a-f33c41cc14c3",
+        "2023-09-30": "https://api.odcloud.kr/api/15106894/v1/uddi:aa8caeda-5e50-40a3-8c88-f578489723f0",
+        "2023-08-31": "https://api.odcloud.kr/api/15106894/v1/uddi:00ab07ba-7973-4839-8f9b-ce6cd6a772d1",
+        "2023-07-31": "https://api.odcloud.kr/api/15106894/v1/uddi:2f1fb400-bfcb-495f-813f-bcfdf665edd4",
+        "2023-06-30": "https://api.odcloud.kr/api/15106894/v1/uddi:0034d67d-06d8-4ef5-a7ef-922a3a447135",
+        "2023-05-31": "https://api.odcloud.kr/api/15106894/v1/uddi:e6a9053a-d0e0-4cfe-9f3e-f6a0c9766903",
+        "2023-04-30": "https://api.odcloud.kr/api/15106894/v1/uddi:6a23dae7-0af9-4aac-a2c3-cb124a434e68",
+        "2023-03-31": "https://api.odcloud.kr/api/15106894/v1/uddi:de8c3c6c-bc6a-45ce-8d11-9800db890047",
+        "2023-02-28": "https://api.odcloud.kr/api/15106894/v1/uddi:bd016cf9-8562-4ae7-b17c-94b89acaccce",
+        "2023-01-31": "https://api.odcloud.kr/api/15106894/v1/uddi:f2d0110e-7e16-4e1b-8bf8-ac9da025b1ec",
+        "2022-12-31": "https://api.odcloud.kr/api/15106894/v1/uddi:1b67f023-8638-4ba6-9d5b-f185964d3cf4",
+        "2022-11-30": "https://api.odcloud.kr/api/15106894/v1/uddi:279e9dc9-4930-4280-b86f-a0e8e5132554",
+        "2022-10-31": "https://api.odcloud.kr/api/15106894/v1/uddi:8362deec-d926-4b27-a99c-818a01c7946e",
+        "2022-09-30": "https://api.odcloud.kr/api/15106894/v1/uddi:2f6480a4-febc-484a-b4f6-e26e8cb07581",
+        "2022-08-31": "https://api.odcloud.kr/api/15106894/v1/uddi:fb9b169b-528e-4a96-abca-df5ce3972085",
+        "2022-07-31": "https://api.odcloud.kr/api/15106894/v1/uddi:8ed28ae9-008e-48d4-9e8f-c813c8122ff0",
+        "2022-06-30": "https://api.odcloud.kr/api/15106894/v1/uddi:a3fdfed9-125c-4512-b2a4-d577467c1773"
+      };
+
+      $.each(API_LIST, function (label) {
+        const yearMonth = label.substring(0, 4) + '년 ' + Number(label.substring(5, 7)) + '월';
+        $('#apiDate').append('<option value="' + label + '">' + yearMonth + '</option>');
+      });
+
+      $('#btn').click(function () {
+        $('#tableHead').empty();
+        $('#tableBody').empty();
+        $('#message').text('조회 중입니다...');
+
+        const selectedDate = $('#apiDate').val();
+        const apiUrl = API_LIST[selectedDate];
+        const perPage = $('input[name="perPage"]:checked').val();
+
+        const param = {
+          page: 1,
+          perPage: perPage,
+          returnType: 'JSON',
+          serviceKey: decodeURIComponent(SERVICE_KEY)
+        };
+
+        console.log(apiUrl, param);
+
+        $.ajax({
+          url: apiUrl,
+          type: 'GET',
+          data: param,
+          dataType: 'json',
+          success: function (jsondata) {
+            const pensionList = jsondata.data || [];
+
+            if (pensionList.length === 0) {
+              $('#message').text('조회된 데이터가 없습니다. serviceKey를 확인하세요.');
+              return;
+            }
+
+            makeTable(pensionList);
+            $('#message').text('총 ' + jsondata.totalCount + '건 중 ' + jsondata.currentCount + '건 조회');
+          },
+          error: function (xhr) {
+            console.log(xhr);
+            $('#message').text('API 호출 실패: serviceKey 또는 네트워크/CORS 상태를 확인하세요.');
+          }
+        });
+      });
+
+      function makeTable(list) {
+        const keys = Object.keys(list[0]).sort(function (a, b) {
+          if (a === '구분') return -1;
+          if (b === '구분') return 1;
+          if (a.indexOf('현황') === 0) return 1;
+          if (b.indexOf('현황') === 0) return -1;
+          return a.localeCompare(b, 'ko', { numeric: true });
+        });
+
+        $('#tableHead').append('<tr></tr>');
+        $.each(keys, function (index, key) {
+          $('#tableHead tr').append('<th scope="col">' + key + '</th>');
+        });
+
+        $.each(list, function (index, obj) {
+          let row = '<tr>';
+          $.each(keys, function (i, key) {
+            row += '<td>' + formatValue(key, obj[key]) + '</td>';
+          });
+          row += '</tr>';
+          $('#tableBody').append(row);
+        });
+      }
+
+      function formatValue(key, value) {
+        if (value == null) {
+          return '';
+        }
+
+        if (key.indexOf('십억') === -1 || isNaN(value)) {
+          return value;
+        }
+
+        const billionWon = Number(value);
+        const jo = Math.floor(billionWon / 1000);
+        const eok = (billionWon % 1000) * 10;
+
+        if (jo > 0 && eok > 0) {
+          return jo.toLocaleString() + '조 ' + eok.toLocaleString() + '억';
+        }
+
+        if (jo > 0) {
+          return jo.toLocaleString() + '조';
+        }
+
+        return eok.toLocaleString() + '억';
+      }
+    });
+  </script>
+  <style>
+    body {
+      margin: 50px;
+      padding: 50px;
+      border: solid 5px gray;
+    }
+
+    .control-area {
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: max-content;
+      min-width: 100%;
+      font-size: 13px;
+      table-layout: auto;
+    }
+
+    th,
+    td {
+      min-width: 140px;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    th:first-child,
+    td:first-child {
+      min-width: 220px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+  
+    @media (max-width: 768px) {
+      body {
+        margin: 10px;
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+<ol class="breadcrumb">
+  <h1 style="margin: auto; color: rgb(68, 68, 68);">국민연금공단 기금 포트폴리오 현황</h1>
+</ol>
+
+<div class="control-area">
+  <label for="apiDate">기준월: </label>
+  <select name="apiDate" id="apiDate"></select>
+  &nbsp;&nbsp;&nbsp;
+
+  <input type="radio" name="perPage" value="3"> 3건 보기
+  <input type="radio" name="perPage" value="5" checked> 5건 보기
+  <input type="radio" name="perPage" value="10"> 10건 보기
+  &nbsp;&nbsp;&nbsp;
+
+  <input type="button" id="btn" class="btn btn-primary btn-sm" value="검색">
+</div>
+
+<p id="message" class="text-info">기준월과 조회 건수를 선택한 뒤 검색을 누르세요.</p>
+
+<div class="table-responsive">
+  <table class="table table-hover table-bordered">
+    <thead id="tableHead"></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
