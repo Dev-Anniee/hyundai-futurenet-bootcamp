@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>fetch를 사용한 TODO CRUD 예제</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 600px;
+      margin: 30px auto;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin: 8px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+    button {
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📋 TODO 리스트 (JSONPlaceholder)</h2>
+  <input type="text" id="newTodo" placeholder="할 일을 입력하세요" />
+  <button id="addBtn">추가</button>
+
+  <ul id="todoList"></ul>
+
+  <script>
+  /*
+  목록 조회	GET	     상위 5개 할 일 목록 가져오기
+  추가	    POST	 새로운 할 일을 입력하여 추가
+  수정	    PUT	     할 일 완료 여부 토글
+  삭제	    DELETE	 선택한 할 일 삭제
+  
+  loadTodos()   기존 데이터 가지고 오기
+  addTodoToDOM(todo) UI todo 항목 추가
+  addBtn.addEventListener CREATE: 할 일 추가
+  UPDATE: 완료 상태 토글
+  deleteTodo(id) DELETE: 할 일 삭제
+  */
+  
+  
+    const API_URL = "https://jsonplaceholder.typicode.com/todos";
+    const todoList = document.getElementById("todoList");
+    const addBtn = document.getElementById("addBtn");
+    const newTodoInput = document.getElementById("newTodo");
+
+    // ✅ READ: 기존 데이터 가져오기
+    function loadTodos() {
+      fetch(API_URL + "?_limit=5") // 5개만 가져오기
+        .then(res => res.json())
+        .then(data => {
+          todoList.innerHTML = "";
+          data.forEach(todo => addTodoToDOM(todo));
+        });
+    }
+
+    // UI에 TODO 아이템 추가
+    function addTodoToDOM(todo) {
+      const li = document.createElement("li");
+      li.dataset.id = todo.id;
+      li.className = todo.completed ? "completed" : "";
+      li.innerHTML = `
+        <span>${todo.title}</span>
+        <button onclick="toggleTodo(${todo.id})">완료</button>
+        <button onclick="deleteTodo(${todo.id})">삭제</button>
+      `;
+      todoList.appendChild(li);
+    }
+
+    // ✅ CREATE: 할 일 추가
+    addBtn.addEventListener("click", () => {
+      const title = newTodoInput.value.trim();
+      if (title === "") return alert("할 일을 입력하세요!");
+
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: title,
+          completed: false,
+          userId: 1
+        })
+      })
+      .then(res => res.json())
+      .then(todo => {
+    	console.log("******************");
+    	console.log(todo);
+    	console.log("******************");
+        addTodoToDOM(todo); //목록추가
+        newTodoInput.value = "";
+      });
+    });
+
+    // UPDATE: 완료 상태 토글
+    function toggleTodo(id) {
+      const li = document.querySelector(`li[data-id='${id}']`);
+      const isCompleted = li.classList.contains("completed");
+
+      fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          completed: !isCompleted
+        })
+      })
+      .then(res => res.json())
+      .then(() => {
+        li.classList.toggle("completed");
+      });
+    }
+
+    // ✅ DELETE: 할 일 삭제
+    function deleteTodo(id) {
+      fetch(`${API_URL}/${id}`, {
+        method: "DELETE"
+      })
+      .then(() => {
+        const li = document.querySelector(`li[data-id='${id}']`);
+        if (li) li.remove();
+      });
+    }
+
+    // 초기 로딩
+    loadTodos();
+  </script>
+
+</body>
+</html>
