@@ -1,0 +1,12 @@
+Spring 
+
+1. 생성자 주입  (constructor injection)
+2. setter 주입 (setter injection)
+
+
+주입
+1. 값(value) : "A" , 1000
+2. 객체(bean) : ref bean=""
+
+3. 중요 (JAVA API 제공하는 객체)
+Collection 객체 > List , Set , Map >> 설정을 제공 받는다 

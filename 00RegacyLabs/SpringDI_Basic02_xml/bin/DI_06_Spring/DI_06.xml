@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--  
+객체의 생성과 조립(주입) 담당 > 순수한 자바 (xml 과 동일한 역할)
+
+Spring regacy 에서는 객체의 생성과 조립
+1. xml 파일 ( bean 요소 사용)
+2. @Configuration 설정을 가지고 자바의 함수를 통해서 객체 생성
+
+
+      ArticleService service = new ArticleService(new MySqlDao());
+	  Article article = new Article();
+	  service.write(article);
+-->
+	<bean id="mysqlDao"  class="DI_06_Spring.MySqlDao"></bean>
+	<bean id="oracleDao"  class="DI_06_Spring.OracleDao"></bean>
+	<bean id="articleService"  class="DI_06_Spring.ArticleService">
+			<constructor-arg>
+				<ref bean="oracleDao" />  <!-- bean  객체의 주소값을 받겠다 -->
+			</constructor-arg>
+	</bean>
+	<bean id="article"  class="DI_06_Spring.Article"></bean>
+</beans>
+
+
+

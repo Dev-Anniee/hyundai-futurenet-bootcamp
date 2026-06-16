@@ -1,0 +1,25 @@
+Spring MVC 패턴
+
+Model (dto , dao , service)
+
+View  (jsp(el&jstl)  , 타임리프 (server script 기반 템플릿) 확장자 .html 
+
+Controller  (servlet)
+
+클라이언트 요청
+
+controller -> (의존)service -> (의존) dao -> DB  -> service -> controller -> view -> forward  -> 클라이언트 전달
+          dto              dto
+          
+ 
+ 1. 요구사항
+ DB 2개 : Oracle , Mysql > sql 는 동일한 DML 을 사용한다 (동일한 함수를 통해서 DML 실행한다)
+          
+ create table Article..
+ dto
+ dao > 추상클래스 , 인터페이스  (공통 함수(추상)) -> 강제구현
+ ArticleDao > CRUD > 함수(추상) 
+ service
+ 
+ 
+          

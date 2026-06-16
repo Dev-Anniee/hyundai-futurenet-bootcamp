@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--  
+객체의 생성과 조립(주입) 담당 > 순수한 자바 (xml 과 동일한 역할)
+
+Spring regacy 에서는 객체의 생성과 조립
+1. xml 파일 ( bean 요소 사용)
+2. @Configuration 설정을 가지고 자바의 함수를 통해서 객체 생성
+
+
+<bean id="식별자 이름" name="m1,m2 m3;m4"
+별칭의 구분: ,  공백   ;  인정 
+
+MessageBeanImpl messageBeanImpl = new MessageBeanImpl("hong")
+messageBeanImpl.setGreeting("hello") setter 통한 injection
+setGreeting 구현하고 member field 이름을 사용해서 <property name=""> 설정 
+-->
+	<bean id="messageBeanImpl" name="m1,m2 m3;m4" class="DI_04_Spring.MessageBeanImpl">
+		<constructor-arg value="hong" />
+		<property name="greeting" value="hello" />
+		<!-- 
+		<constructor-arg>
+			<value>hong</value>
+		</constructor-arg>
+		<property name="greeting">
+			<value>hello</value>
+		</property>
+		 -->
+	</bean>
+</beans>
+
+
+

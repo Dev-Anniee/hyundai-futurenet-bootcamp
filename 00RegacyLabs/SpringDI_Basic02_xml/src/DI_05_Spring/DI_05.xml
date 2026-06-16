@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	                        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--  
+객체의 생성과 조립(주입) 담당 > 순수한 자바 (xml 과 동일한 역할)
+
+Spring regacy 에서는 객체의 생성과 조립
+1. xml 파일 ( bean 요소 사용)
+2. @Configuration 설정을 가지고 자바의 함수를 통해서 객체 생성
+
+
+<bean id="식별자 이름" name="m1,m2 m3;m4"
+별칭의 구분: ,  공백   ;  인정 
+
+-->
+	<bean id="myBean" class="DI_05_Spring.MyBean"></bean>  <!-- 객체의 타입은 singleton  -->
+	<bean id="myBean2" class="DI_05_Spring.MyBean"></bean>
+	<bean id="myBean3" class="DI_05_Spring.MyBean">
+		<constructor-arg value="hong"></constructor-arg>
+	</bean>
+	
+	<!-- 
+		3.x.x 버전  factory-method="getInstance"
+		4.x.x 버전  factory-method="getInstance" 명시하지 않아도 자동으로  getInstance 자동 호출
+	 -->
+	 <bean id="single" class="DI_05_Spring.Singleton" factory-method="getInstance"></bean>
+</beans>
+
+
+

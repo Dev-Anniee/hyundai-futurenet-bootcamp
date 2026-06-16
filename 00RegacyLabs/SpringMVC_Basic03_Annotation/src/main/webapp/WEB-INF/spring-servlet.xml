@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+      
+ <context:annotation-config /><!-- @Autowired 동작하기 위해 객체 미리 생성 -->
+ 
+ <!-- TEST_1  @Controller 있다고 자동으로 빈객체로 생성되지는 않아요  -->
+ <bean id="helloController" class="com.controller.HelloController"></bean>     
+
+
+<!-- TEST_2 하나의 요청 주소 : GET, POST 판단 처리 -->
+<bean class="com.controller.NewArticleController"></bean>
+<bean class="com.service.ArticleService"></bean>
+
+<!-- TEST_3 하나의 요청 주소 : GET. POST 판단 처리 -->
+<!-- parameter  사용되는 DTO 자동 bean 생성   -->
+<bean class="com.controller.OrderController"/>
+<!--  TEST_4  -->
+<bean class="com.controller.SearchController"/>
+      
+ <bean id="internalResourceViewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property name="prefix">
+				<value>/WEB-INF/views/</value>
+			</property>
+			<property name="suffix">
+				<value>.jsp</value>
+			</property>
+</bean> 
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
