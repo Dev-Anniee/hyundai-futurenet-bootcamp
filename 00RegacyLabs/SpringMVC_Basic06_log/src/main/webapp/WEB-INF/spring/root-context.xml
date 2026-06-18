@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+<!-- root 컨테이너 안에 들어가는 bean개체 : 공통객체  -->
+
+
+<!-- 
+mybatis 설정하기
+1. 의존성 설정하기
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis</artifactId>
+    <version>3.5.15</version>
+</dependency>
+<dependency>
+    <groupId>org.mybatis</groupId>
+    <artifactId>mybatis-spring</artifactId>
+    <version>2.1.2</version>
+</dependency>
+<dependency>
+    <groupId>com.oracle.database.jdbc</groupId>
+    <artifactId>ojdbc8</artifactId>
+    <version>19.22.0.0</version>
+</dependency>
+
+2.설정
+root-context.xml 
+
+mybatis 사용에 필용한 bean 객체 설정
+
+싱글톤 ...
+SqlSessionFactoryBean 객체 생성 (driverManagerDataSource 의존 ) 
+SqlSessionTemplate 객체 생성
+
+
+3. mybatis 작업을 하기 위해서 
+인터페이스를 기반으로 작업
+
+DAO 작업 -> 인페페이스 변환 (추상함수)
+
+-->
+<!-- DB  -->
+<!-- 
+SPY(x) , POOL(x)
+<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521/XEPDB1"></property>
+		<property name="username" value="springuser"></property>
+		<property name="password" value="1004"></property>
+</bean>
+-->
+<!--
+SPY(0) , POOL(x)
+<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521/XEPDB1" />
+		<property name="username" value="springuser"></property>
+		<property name="password" value="1004"></property>
+</bean>
+  -->
+ 
+ <!-- 
+ log 출력하지 않는 최종 배포  POOL 만 
+ <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+ 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+ 	<property name="jdbcUrl"         value="jdbc:oracle:thin:@localhost:1521/XEPDB1"></property>
+ 	<property name="username"        value="springuser"></property>
+ 	<property name="password"        value="1004"></property>
+ </bean> 
+  <bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+ </bean>  
+ --> 
+ 
+ <!--  
+ 	LOG SPY(0) , POOL(0) 개발 도중 ...
+ 	
+ 	설정하지 않으면 pool 개수 : 10 default
+ 	<property name="maximumPoolSize" value="20"/>
+    <property name="minimumIdle" value="5"/>
+ --> 
+ <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+ 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+ 	<property name="jdbcUrl"         value="jdbc:log4jdbc:oracle:thin:@localhost:1521/XEPDB1"></property>
+ 	<property name="username"        value="springuser"></property>
+ 	<property name="password"        value="1004"></property>
+ 	
+ </bean> 
+ <bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+ </bean> 
+  
+  
+<!-- mybatis 설정 -->
+<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="driverManagerDataSource"></property>
+    <property name="mapperLocations" value="classpath*:mapper/*xml" />
+</bean> 
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+      <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+</bean>
+
+
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="dao"/>
+</bean>
+<!-- dao 패키지 @Mapper 설정을 위한 스캔 -->
+
+<!-- 공통빈  -->
+ <bean id="internalResourceViewResolver"  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property name="prefix">
+				<value>/WEB-INF/views/</value>
+			</property>
+			<property name="suffix">
+				<value>.jsp</value>
+			</property>
+</bean> 
+</beans> 
+
