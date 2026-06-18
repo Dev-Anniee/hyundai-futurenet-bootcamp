@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.DeptDao">
+	<select id="getDepts" resultType="vo.Dept">
+		SELECT DEPTNO, DNAME, LOC
+		FROM DEPT
+		ORDER BY DEPTNO
+	</select>
+
+	<select id="getDept" resultType="vo.Dept">
+		SELECT DEPTNO, DNAME, LOC
+		FROM DEPT
+		WHERE DEPTNO = #{deptno}
+	</select>
+
+	<insert id="insert" parameterType="vo.Dept">
+		INSERT INTO DEPT(DEPTNO, DNAME, LOC)
+		VALUES(#{deptno}, #{dname}, #{loc})
+	</insert>
+
+	<update id="update" parameterType="vo.Dept">
+		UPDATE DEPT
+		SET DNAME = #{dname},
+			LOC = #{loc}
+		WHERE DEPTNO = #{deptno}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM DEPT
+		WHERE DEPTNO = #{deptno}
+	</delete>
+
+	<select id="selectSearch" parameterType="map" resultType="vo.Dept">
+		SELECT DEPTNO, DNAME, LOC
+		FROM DEPT
+		<where>
+			<if test="search != null and search != '' and column != null and column != ''">
+				<choose>
+					<when test="column == 'deptno'">
+						DEPTNO = #{search}
+					</when>
+					<when test="column == 'dname'">
+						DNAME LIKE '%' || #{search} || '%'
+					</when>
+					<when test="column == 'loc'">
+						LOC LIKE '%' || #{search} || '%'
+					</when>
+				</choose>
+			</if>
+
+			<if test="deptnos != null and deptnos.size() > 0">
+				AND DEPTNO IN
+				<foreach collection="deptnos" item="deptno" open="(" separator="," close=")">
+					#{deptno}
+				</foreach>
+			</if>
+		</where>
+		ORDER BY DEPTNO
+	</select>
+</mapper>

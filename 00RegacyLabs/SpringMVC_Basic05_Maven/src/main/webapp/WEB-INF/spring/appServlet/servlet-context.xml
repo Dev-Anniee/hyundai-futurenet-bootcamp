@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd">
+
+<!-- 모든 컨트롤러가 공통 사용 DAO 빈 객체  참조-->
+<context:annotation-config />
+<context:component-scan base-package="ncontroller" />
+<context:component-scan base-package="dao" />
+<context:component-scan base-package="service" />
+<!-- 
+base-package="ncontroller" 패키지 안에 모든 클래스를 스캔합니다
+클래스 위에
+@Controller
+@Service    의미
+@Repository 의미
+@Component  의미
+@RestController
+
+bean 으로 만들어야지 ...
+<bean  id="/customer/notice.htm"           class="controllers.customer.NoticeController"></bean>
+작업이 필요없다
+ -->
+
+
+<!-- 파일 업로드 보조(반드시)  -->
+<bean  id="multipartResolver"    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize"    value="10485760"></property>
+		<property name="defaultEncoding"  value="UTF-8"></property>
+</bean>	
+
+</beans> 
+
+

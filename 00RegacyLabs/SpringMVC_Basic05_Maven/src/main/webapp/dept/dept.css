@@ -1,0 +1,136 @@
+@import url(../css/customer.css);
+
+.dept-wrapper {
+	background: none !important;
+	min-height: 420px;
+}
+
+.dept-content {
+	float: none !important;
+	width: 860px !important;
+	margin: 0 auto;
+	padding-left: 0 !important;
+}
+
+.dept-command {
+	margin: 8px 0 18px;
+	text-align: right;
+}
+
+.dept-insert-button {
+	display: inline-block !important;
+	min-width: 90px !important;
+	height: 34px !important;
+	padding: 0 16px !important;
+	border: 1px solid #6f9d26 !important;
+	background: #8cba34 !important;
+	color: #fff !important;
+	font-size: 13px !important;
+	font-weight: bold !important;
+	line-height: 34px !important;
+	text-align: center !important;
+	text-indent: 0 !important;
+	text-decoration: none !important;
+	overflow: visible !important;
+	cursor: pointer !important;
+	box-sizing: border-box !important;
+}
+
+button.dept-insert-button {
+	font-family: inherit;
+	vertical-align: top;
+}
+
+.dept-command .dept-insert-button {
+	margin-left: 6px;
+}
+
+.dept-table,
+.dept-detail-table {
+	width: 100%;
+	margin-top: 0;
+	border-collapse: collapse !important;
+	border-spacing: 0 !important;
+	table-layout: fixed;
+	border-top: 2px solid #8cba34;
+}
+
+.dept-table thead,
+.dept-detail-table thead {
+	display: table-header-group;
+}
+
+.dept-table tbody,
+.dept-detail-table tbody {
+	display: table-row-group;
+}
+
+.dept-table tr,
+.dept-detail-table tr {
+	display: table-row;
+	height: 54px;
+	line-height: normal;
+}
+
+.dept-table th,
+.dept-table td,
+.dept-detail-table th,
+.dept-detail-table td {
+	display: table-cell !important;
+	padding: 10px;
+	border: 1px solid #d9d9d9;
+	border-collapse: collapse;
+	text-align: center;
+	vertical-align: middle;
+	box-sizing: border-box;
+}
+
+.dept-table th {
+	background: #f5f5f5 !important;
+}
+
+.dept-table th:nth-child(1),
+.dept-table td:nth-child(1) {
+	width: 110px;
+}
+
+.dept-table th:nth-child(2),
+.dept-table td:nth-child(2) {
+	width: 250px;
+}
+
+.dept-table th:nth-child(3),
+.dept-table td:nth-child(3) {
+	width: 250px;
+}
+
+.dept-table th:nth-child(4),
+.dept-table td:nth-child(4) {
+	width: 250px;
+}
+
+.dept-detail-table th {
+	width: 180px;
+	background: #f5f5f5;
+}
+
+.dept-form {
+	margin-top: 25px;
+}
+
+.dept-form p {
+	margin-bottom: 14px;
+}
+
+.dept-form label {
+	display: inline-block;
+	width: 100px;
+	font-weight: bold;
+}
+
+.dept-form input {
+	width: 240px;
+	height: 24px;
+	padding: 2px 6px;
+	border: 1px solid #bfbfbf;
+}
