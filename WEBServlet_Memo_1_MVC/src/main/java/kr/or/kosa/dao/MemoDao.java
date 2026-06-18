@@ -24,6 +24,7 @@ import java.util.List;
 
 import kr.or.kosa.dto.Memo;
 import kr.or.kosa.utils.ConnectionHelper;
+import kr.or.kosa.utils.ConnectionPoolHelper;
 import kr.or.kosa.utils.DBType;
 
 public class MemoDao {
