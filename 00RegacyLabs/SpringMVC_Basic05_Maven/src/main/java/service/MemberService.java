@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import aop.ServiceLog;
 import dao.MemberDao;
 import lombok.RequiredArgsConstructor;
 import vo.Member;
@@ -22,6 +23,7 @@ public class MemberService {
 	*/
 	private final MemberDao MemberMapper;
 	
+	@ServiceLog
 	public Member getMember(String userid) {
 		
 		//MemberDao memberDao = sqlSession.getMapper(MemberDao.class);
@@ -37,6 +39,7 @@ public class MemberService {
 		return member;
 	}
 	
+	@ServiceLog
 	public String insert(Member member) {
 		try {
 			MemberMapper.insert(member);

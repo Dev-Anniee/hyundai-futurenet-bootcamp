@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
 
+import aop.ServiceLog;
 import dao.DeptDao;
 import lombok.RequiredArgsConstructor;
 import vo.Dept;
@@ -15,6 +16,7 @@ import vo.Dept;
 public class DeptService {
 	private final DeptDao deptMapper;
 
+	@ServiceLog
 	public List<Dept> getDepts() {
 		List<Dept> list = new ArrayList<Dept>();
 		try {
@@ -25,6 +27,7 @@ public class DeptService {
 		return list;
 	}
 
+	@ServiceLog
 	public Dept getDept(int deptno) {
 		Dept dept = null;
 		try {
@@ -35,6 +38,7 @@ public class DeptService {
 		return dept;
 	}
 
+	@ServiceLog
 	public String insert(Dept dept) {
 		try {
 			deptMapper.insert(dept);
@@ -44,6 +48,7 @@ public class DeptService {
 		return "redirect:/dept/list.do";
 	}
 
+	@ServiceLog
 	public String update(Dept dept) {
 		try {
 			deptMapper.update(dept);
@@ -53,6 +58,7 @@ public class DeptService {
 		return "redirect:/dept/list.do";
 	}
 
+	@ServiceLog
 	public String delete(int deptno) {
 		try {
 			deptMapper.delete(deptno);
@@ -62,6 +68,7 @@ public class DeptService {
 		return "redirect:/dept/list.do";
 	}
 
+	@ServiceLog
 	public List<Dept> selectSearch(Map<String, Object> map) {
 		List<Dept> list = new ArrayList<Dept>();
 		try {

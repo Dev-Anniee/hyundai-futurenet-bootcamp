@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import aop.ServiceLog;
 import dao.NoticeDao;
 import vo.Notice;
 
@@ -29,6 +30,7 @@ public class CustomerService {
 	//서비스 코드 (DAO) 와 모양새는 거의 같다 
 	
 	//글목록보기 서비스
+	@ServiceLog
 	public List<Notice> notices(String pg , String f , String q) {
 		
 		int page = 1;
@@ -67,6 +69,7 @@ public class CustomerService {
 		return list;
 	}
 	//글 상세보기 서비스
+	@ServiceLog
 	public Notice noticesDetail(String seq) {
 			
 			Notice  notice = null;
@@ -86,6 +89,7 @@ public class CustomerService {
 		}
 
 	//글 쓰기 서비스
+	@ServiceLog
 	public String noticeReg(Notice n , HttpServletRequest request) {
 			  
 		    String filename =n.getFile().getOriginalFilename();
@@ -126,6 +130,7 @@ public class CustomerService {
 	}
 
 	//글 수정하기 서비스
+	@ServiceLog
 	public Notice noticeEdit(String seq) {
 			
 			Notice  notice = null;
@@ -145,6 +150,7 @@ public class CustomerService {
 		}
 
 	//글 수정하기 처리 서비스
+	@ServiceLog
 	public String noticeEdit(Notice n , HttpServletRequest request) {
 			  //파일 업로드 가능
 		 String filename =n.getFile().getOriginalFilename();
@@ -182,6 +188,7 @@ public class CustomerService {
 		}
 		
 	//글 삭제하기 서비스
+	@ServiceLog
 	public String noticeDel(String seq) {
 			
 			 NoticeDao noticeDao = sqlSession.getMapper(NoticeDao.class); //추가\
