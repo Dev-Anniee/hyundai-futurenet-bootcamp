@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.kosa.mapper.UserMapper">
+
+  <resultMap type="User" id="userResultMap">
+    <id property="id" column="id"/>
+    <result property="username" column="username"/>
+    <result property="password" column="passwd"/>
+    <result property="email" column="email"/>
+  </resultMap>
+
+  <select id="selectAll" resultMap="userResultMap">
+    select id, username, passwd, email
+    from kosauser
+  </select>
+
+  <select id="selectById" parameterType="long" resultMap="userResultMap">
+    select id, username, passwd, email
+    from kosauser
+    where id = #{id}
+  </select>
+
+  <insert id="insert" parameterType="User">
+    insert into kosauser(id, username, passwd, email)
+    values(user_id.nextval, #{username}, #{password}, #{email})
+  </insert>
+
+  <update id="update" parameterType="User">
+    update kosauser
+    set username = #{username},
+    passwd = #{password},
+    email = #{email}
+    where id = #{id}
+  </update>
+
+  <delete id="delete" parameterType="long">
+    delete from kosauser
+    where id = #{id}
+  </delete>
+
+</mapper>
