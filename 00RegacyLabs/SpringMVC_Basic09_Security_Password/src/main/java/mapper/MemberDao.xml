@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+1. Mybatis Mapper 작업
+1.1  mapper namespace="" 는 DAO 인터페이스와 동일한 경로 
+1.2  interface 가지는 함수이름과  xml id="" 동일하게 
+ 
+ SELECT * FROM MEMBER WHERE UID=?
+ INSERT INTO MEMBER(UID, PWD, NAME, GENDER, BIRTH, IS_LUNAR, CPHONE, EMAIL, HABIT, REGDATE)
+ VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, SYSDATE)
+ 
+ 
+ public Member getMember(String userid)
+ public int insert(Member member) 
+ 
+ 만약에
+ 
+ select empno as no, enname , job , sal from emp
+ 
+ DTO
+ class Emp{
+  String no,  >> empno 
+  String name,
+  String job,
+  int sal
+ }
+ 
+ 원칙적으로 매핑 실패 ...
+ resultMap=""   empno  하고 no 매핑해라 .... 
+ -->
+ <mapper namespace="dao.MemberDao">
+ 
+ 	<!-- 회원정보 가져오기 -->
+ 	<select id="getMember" resultType="vo.Member"  >
+ 		select "UID" as "userid", pwd, name, gender, birth, is_lunar as "isLunar", cphone, email, habit, regdate as "regDate"
+        from member where "UID"=#{userid}
+ 	</select>
+ 	
+ 	<!-- 회원가입 -->
+    <insert id="insert" parameterType="vo.Member">
+    	INSERT INTO MEMBER("UID", PWD, NAME, GENDER, BIRTH, IS_LUNAR, CPHONE, EMAIL, HABIT, REGDATE)
+        VALUES(#{userid}, #{pwd}, #{name}, #{gender,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}, #{isLunar,jdbcType=VARCHAR}, #{cphone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{habit,jdbcType=VARCHAR}, SYSDATE)
+    </insert>
+
+    <insert id="insertRole">
+        INSERT INTO ROLL(USERID, ROLE_NAME)
+        VALUES(#{userid}, 'ROLE_USER')
+    </insert>
+    
+  	
+	<!-- 회원정보 수정하기 -->
+	<update id="updateMember">
+		update member
+		set pwd = #{pwd}, name=#{name}, cphone=#{cphone}, email=#{email}
+		where "UID" = #{userid}
+	</update>	
+ </mapper>
+  
+

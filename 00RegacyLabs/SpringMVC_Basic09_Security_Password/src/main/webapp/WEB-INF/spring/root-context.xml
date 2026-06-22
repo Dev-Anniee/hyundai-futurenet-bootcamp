@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+
+
+
+
+
+
+<!-- 
+1. DB  POOL x,   Spy x
+
+<bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="springuser"></property>
+		<property name="password" value="1004"></property>
+</bean> 
+-->
+
+<!-- 
+1. DB  POOL x,   Spy o 
+2. log4j2 spy 기능 추가
+2.1 value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
+2.2 value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"
+
+	<bean id="driverManagerDataSource"	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+ 		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE" />
+		<property name="username" value="springuser"></property>
+		<property name="password" value="1004"></property>
+	</bean>
+-->
+
+<!-- 
+1. 1. DB  POOL 0,   Spy x  배포시 ...
+2. hikari pool 설정된 경우 
+
+ <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+ 	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+ 	<property name="jdbcUrl"         value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+ 	<property name="username"        value="springuser"></property>
+ 	<property name="password"        value="1004"></property>
+ </bean> 
+ 
+  <bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+ </bean>
+ -->
+  <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+ 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+ 	<property name="jdbcUrl"         value="jdbc:log4jdbc:oracle:thin:@localhost:1521/XEPDB1"></property>
+ 	<property name="username"        value="springuser"></property>
+ 	<property name="password"        value="1004"></property>
+ </bean> 
+ <bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+ </bean>
+
+ <!--  Pool o , spy o  : 개발시   -->
+ <!--  
+ <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+ 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+ 	<property name="jdbcUrl"         value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+ 	<property name="username"        value="springuser"></property>
+ 	<property name="password"        value="1004"></property>
+ </bean> 
+ <bean id="driverManagerDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"></constructor-arg>
+ </bean>
+-->
+
+
+<!-- mybatis 설정 -->
+<bean id="sqlSessionFactoryBean"  class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="driverManagerDataSource"></property>
+    <property name="mapperLocations" value="classpath*:mapper/*xml" />
+</bean> 
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+  <constructor-arg index="0" ref="sqlSessionFactoryBean"/>
+</bean>
+
+<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="dao"/>
+</bean>
+<!-- Mybatis 설정  -->
+
+<!-- 공통빈  -->
+<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+</bean>	
+
+<!-- 파일 업로드  -->
+<bean  id="multipartResolver"    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize"    value="10485760"></property>
+		<property name="defaultEncoding"  value="UTF-8"></property>
+</bean>	
+
+<!-- 비밀번호 암호화 -->
+<bean id="bCryptPasswordEncoder"   class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+</bean>
+
+
+</beans>

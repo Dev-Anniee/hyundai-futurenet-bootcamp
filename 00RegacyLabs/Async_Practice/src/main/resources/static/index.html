@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async 주문 실습</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-strong: #111827;
+      --line: #d9dee7;
+      --text: #172033;
+      --muted: #667085;
+      --primary: #1f7a8c;
+      --primary-dark: #155d6b;
+      --accent: #c44536;
+      --ok: #2f855a;
+      --warn: #b7791f;
+      --shadow: 0 18px 40px rgba(23, 32, 51, 0.10);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+          linear-gradient(135deg, rgba(31, 122, 140, 0.12), transparent 36%),
+          linear-gradient(315deg, rgba(196, 69, 54, 0.10), transparent 34%),
+          var(--bg);
+      color: var(--text);
+      font-family: Arial, "Noto Sans KR", sans-serif;
+    }
+
+    header {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 24px 18px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .status-pill {
+      min-width: 148px;
+      min-height: 36px;
+      padding: 9px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .status-pill.ok {
+      border-color: rgba(47, 133, 90, 0.30);
+      background: rgba(47, 133, 90, 0.10);
+      color: var(--ok);
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 24px 40px;
+      display: grid;
+      grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    .panel-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .endpoint {
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: #eef2f7;
+      color: #344054;
+      font-size: 13px;
+      font-family: Consolas, monospace;
+      white-space: nowrap;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 7px;
+      color: #344054;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    input {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31, 122, 140, 0.16);
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    button {
+      min-height: 44px;
+      border: 0;
+      border-radius: 6px;
+      padding: 0 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button[type="submit"] {
+      background: var(--primary);
+      color: white;
+    }
+
+    button[type="submit"]:hover {
+      background: var(--primary-dark);
+    }
+
+    button[type="button"] {
+      background: #eef2f7;
+      color: #344054;
+    }
+
+    button:disabled {
+      opacity: 0.58;
+      cursor: wait;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .metric {
+      min-height: 76px;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfcfe;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--surface-strong);
+      font-size: 18px;
+      line-height: 1.25;
+      word-break: keep-all;
+    }
+
+    .timeline {
+      min-height: 502px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .timeline-head {
+      min-height: 65px;
+      padding: 20px 22px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .thread-name {
+      color: var(--muted);
+      font-size: 13px;
+      font-family: Consolas, monospace;
+      text-align: right;
+    }
+
+    .event-list {
+      list-style: none;
+      margin: 0;
+      padding: 10px 0;
+      max-height: 438px;
+      overflow: auto;
+    }
+
+    .event {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) 132px 88px;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 22px;
+      border-bottom: 1px solid #edf1f6;
+    }
+
+    .event:last-child {
+      border-bottom: 0;
+    }
+
+    .event-type {
+      min-height: 26px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .event-type.order {
+      background: var(--primary);
+    }
+
+    .event-type.notification {
+      background: var(--accent);
+    }
+
+    .event-type.thread {
+      background: #4a5568;
+    }
+
+    .event-type.error {
+      background: var(--warn);
+    }
+
+    .event-message {
+      min-width: 0;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .event-thread {
+      min-width: 0;
+      color: #344054;
+      font-size: 13px;
+      font-family: Consolas, monospace;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .event-time {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: right;
+      font-family: Consolas, monospace;
+      white-space: nowrap;
+    }
+
+    .empty {
+      padding: 70px 22px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      header {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      .status-pill {
+        width: fit-content;
+      }
+    }
+
+    @media (max-width: 560px) {
+      header,
+      main {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .actions,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .event {
+        grid-template-columns: 1fr;
+        gap: 7px;
+      }
+
+      .event-type {
+        width: fit-content;
+      }
+
+      .event-time {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Async 주문 실습</h1>
+      <p class="subtitle">주문 저장과 알림 발송 분리</p>
+    </div>
+    <div id="verdict" class="status-pill">검증 대기</div>
+  </header>
+
+  <main>
+    <section class="panel">
+      <div class="panel-heading">
+        <h2>주문 요청</h2>
+        <span class="endpoint">POST /orders</span>
+      </div>
+
+      <form id="orderForm">
+        <label>
+          회원 ID
+          <input name="memberId" type="number" min="1" value="1" required>
+        </label>
+        <label>
+          상품명
+          <input name="productName" type="text" value="무선 마우스" required>
+        </label>
+        <label>
+          수량
+          <input name="quantity" type="number" min="1" value="2" required>
+        </label>
+        <label>
+          가격
+          <input name="price" type="number" min="0" value="30000" required>
+        </label>
+
+        <div class="actions">
+          <button id="submitButton" type="submit">주문 요청</button>
+          <button id="clearButton" type="button">로그 초기화</button>
+        </div>
+      </form>
+
+      <div class="metrics">
+        <div class="metric">
+          <span>HTTP 응답</span>
+          <strong id="responseMessage">-</strong>
+        </div>
+        <div class="metric">
+          <span>응답 시간</span>
+          <strong id="responseTime">-</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="timeline">
+      <div class="timeline-head">
+        <h2>실행 로그</h2>
+        <div id="threadName" class="thread-name">thread: -</div>
+      </div>
+      <ul id="eventList" class="event-list">
+        <li class="empty">로그 없음</li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector("#orderForm");
+    const clearButton = document.querySelector("#clearButton");
+    const responseMessage = document.querySelector("#responseMessage");
+    const responseTime = document.querySelector("#responseTime");
+    const eventList = document.querySelector("#eventList");
+    const verdict = document.querySelector("#verdict");
+    const threadName = document.querySelector("#threadName");
+
+    let pollingId = null;
+    let sentCount = 0;
+    let autoScrollEvents = true;
+    let renderedEventSignature = null;
+
+    function isEventListAtBottom() {
+      return eventList.scrollHeight - eventList.scrollTop - eventList.clientHeight < 24;
+    }
+
+    eventList.addEventListener("scroll", () => {
+      autoScrollEvents = isEventListAtBottom();
+    });
+
+    async function fetchEvents() {
+      const response = await fetch("/notification-events");
+      if (!response.ok) {
+        throw new Error("로그 조회 실패");
+      }
+      return response.json();
+    }
+
+    function formatTime(value) {
+      return new Intl.DateTimeFormat("ko-KR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      }).format(new Date(value));
+    }
+
+    function extractOrderNo(message) {
+      const match = message.match(/\[주문 #(\d+)]/);
+      return match ? match[1] : null;
+    }
+
+    function collectOrderNos(events, keyword) {
+      return new Set(
+          events
+              .filter((event) => event.message.includes(keyword))
+              .map((event) => extractOrderNo(event.message))
+              .filter(Boolean)
+      );
+    }
+
+    function renderThreadSummary(events) {
+      const asyncThreads = [...new Set(
+          events
+              .map((event) => event.threadName)
+              .filter((name) => name.startsWith("async-order-"))
+      )];
+
+      threadName.textContent = asyncThreads.length > 0
+          ? `threads: ${asyncThreads.join(", ")}`
+          : "thread: -";
+    }
+
+    function renderVerdict(events) {
+      const startedOrders = collectOrderNos(events, "알림 발송 시작");
+      const completedOrders = collectOrderNos(events, "알림 발송 완료");
+      const pendingCount = [...startedOrders]
+          .filter((orderNo) => !completedOrders.has(orderNo))
+          .length;
+
+      if (pendingCount > 0) {
+        verdict.className = "status-pill";
+        verdict.textContent = `알림 처리 중 ${pendingCount}건`;
+        return;
+      }
+
+      if (completedOrders.size > 0) {
+        verdict.className = "status-pill ok";
+        verdict.textContent = `비동기 확인 ${completedOrders.size}건`;
+        return;
+      }
+
+      verdict.className = "status-pill";
+      verdict.textContent = "주문 대기";
+    }
+
+    function renderEvents(events) {
+      const shouldStickToBottom = autoScrollEvents;
+      const previousScrollTop = eventList.scrollTop;
+      const orderedEvents = [...events].sort((first, second) => first.sequence - second.sequence);
+      const eventSignature = orderedEvents.map((event) => event.sequence).join(",");
+
+      if (eventSignature === renderedEventSignature) {
+        return;
+      }
+
+      eventList.innerHTML = "";
+
+      if (orderedEvents.length === 0) {
+        eventList.innerHTML = '<li class="empty">로그 없음</li>';
+        threadName.textContent = "thread: -";
+        verdict.className = "status-pill";
+        verdict.textContent = "검증 대기";
+        renderedEventSignature = eventSignature;
+        autoScrollEvents = true;
+        return;
+      }
+
+      for (const event of orderedEvents) {
+        const item = document.createElement("li");
+        item.className = "event";
+
+        const type = document.createElement("span");
+        type.className = `event-type ${event.type}`;
+        type.textContent = event.type;
+
+        const message = document.createElement("span");
+        message.className = "event-message";
+        message.textContent = event.message;
+
+        const thread = document.createElement("span");
+        thread.className = "event-thread";
+        thread.title = event.threadName;
+        thread.textContent = event.threadName;
+
+        const time = document.createElement("span");
+        time.className = "event-time";
+        time.textContent = formatTime(event.createdAt);
+
+        item.append(type, message, thread, time);
+        eventList.append(item);
+      }
+
+      renderThreadSummary(orderedEvents);
+      renderVerdict(orderedEvents);
+      eventList.scrollTop = shouldStickToBottom ? eventList.scrollHeight : previousScrollTop;
+      renderedEventSignature = eventSignature;
+      autoScrollEvents = isEventListAtBottom();
+    }
+
+    async function refreshEvents() {
+      const events = await fetchEvents();
+      renderEvents(events);
+      return events;
+    }
+
+    function startPolling() {
+      if (pollingId !== null) {
+        return;
+      }
+
+      pollingId = window.setInterval(async () => {
+        try {
+          await refreshEvents();
+        } catch (error) {
+          responseMessage.textContent = error.message;
+        }
+      }, 500);
+    }
+
+    async function clearEvents() {
+      window.clearInterval(pollingId);
+      pollingId = null;
+      sentCount = 0;
+      await fetch("/notification-events", { method: "DELETE" });
+      responseMessage.textContent = "-";
+      responseTime.textContent = "-";
+      await refreshEvents();
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const requestNo = ++sentCount;
+      responseMessage.textContent = `${requestNo}번째 요청 중`;
+      responseTime.textContent = "-";
+      verdict.className = "status-pill";
+      verdict.textContent = "요청 처리 중";
+      startPolling();
+
+      const formData = new FormData(form);
+      const payload = {
+        memberId: Number(formData.get("memberId")),
+        productName: formData.get("productName"),
+        quantity: Number(formData.get("quantity")),
+        price: Number(formData.get("price"))
+      };
+
+      const startedAt = performance.now();
+
+      try {
+        const response = await fetch("/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const message = await response.text();
+        responseMessage.textContent = `${requestNo}번째 ${message}`;
+        responseTime.textContent = `${Math.round(performance.now() - startedAt)}ms`;
+      } catch (error) {
+        responseMessage.textContent = error.message;
+        verdict.className = "status-pill";
+        verdict.textContent = "요청 실패";
+      } finally {
+        await refreshEvents();
+      }
+    });
+
+    clearButton.addEventListener("click", async () => {
+      await clearEvents();
+    });
+
+    refreshEvents();
+  </script>
+</body>
+</html>
