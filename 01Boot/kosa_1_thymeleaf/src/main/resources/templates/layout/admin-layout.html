@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Layout</title>
+</head>
+<body>
+
+<header>
+    <h1>관리자 페이지</h1>
+    <nav>
+        <a th:href="@{/admin/dashboard}">대시보드</a> |
+        <a th:href="@{/admin/member-list}">회원관리</a> |
+        <a th:href="@{/}">사용자 홈</a>
+    </nav>
+    <hr>
+</header>
+
+<aside>
+    <h3>관리자 메뉴</h3>
+    <ul>
+        <li><a th:href="@{/admin/dashboard}">대시보드</a></li>
+        <li><a th:href="@{/admin/member-list}">회원관리</a></li>
+    </ul>
+</aside>
+
+<main>
+    <div th:replace="~{${content} :: content}"></div>
+</main>
+
+<footer>
+    <hr>
+    <p>관리자 Footer</p>
+</footer>
+
+</body>
+</html>

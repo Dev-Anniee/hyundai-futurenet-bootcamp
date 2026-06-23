@@ -1,0 +1,47 @@
+# Build outputs
+build/
+target/
+out/
+bin/
+*.class
+
+# Gradle
+.gradle/
+**/gradle.properties
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.classpath
+.project
+.settings/
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and runtime output
+*.log
+run-logs/
+
+# Local/generated help files from project scaffolding
+HELP.md
+
+# Local Spring application config
+**/src/main/resources/application.properties
+**/src/main/resources/application.yml
+**/src/main/resources/application.yaml
+
+# Test sources
+**/src/test/
+
+# Scratch or previous-day practice projects.
+# Already tracked files remain tracked; this only blocks new untracked files.
+/TEST/
+/TEST-01/
+/kosa/
+/kosa_1/
+/kosa_2/

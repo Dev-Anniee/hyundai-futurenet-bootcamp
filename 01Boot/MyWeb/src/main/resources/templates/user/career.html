@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div id="page-content" th:fragment="content">
+  <section class="page-heading">
+    <span class="section-kicker">Career</span>
+    <h1>경력</h1>
+    <p>프로젝트 경험, 교육 이력, 학력, 기술 역량을 정리했습니다.</p>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <span class="section-kicker">Experience</span>
+      <h2>프로젝트 경험</h2>
+    </div>
+    <div class="timeline">
+      <article class="timeline-item">
+        <span class="timeline-date">2024.09 - 2025.04</span>
+        <h3>패스트캠퍼스 백엔드 부트캠프</h3>
+        <p>총 960시간의 백엔드 개발자 과정을 수료했습니다. Java, 데이터베이스, Spring 기반 기초를 다지고 쇼핑몰과 LangChain 기반 여행 일정 서비스를 개발했습니다.</p>
+        <p>마지막 8주간은 기업 연계 프로젝트에서 회원 인증과 인가를 담당하며 백엔드 설계를 경험했습니다.</p>
+      </article>
+      <article class="timeline-item">
+        <span class="timeline-date">2024.06 - 2024.08</span>
+        <h3>피로그래밍</h3>
+        <p>HTML, CSS, JavaScript, Python, Django, AWS를 학습하고 팀 프로젝트를 수행했습니다.</p>
+        <p>개발 팀장으로서 채팅 기능 개발과 NCP 기반 서버 구축을 주도했고, Django API 설계와 DB 모델링부터 배포까지 경험했습니다.</p>
+      </article>
+      <article class="timeline-item">
+        <span class="timeline-date">2023.09 - 2023.12</span>
+        <h3>졸업작품</h3>
+        <p>AI 기반 연령, 감정별 메뉴 추천 키오스크 시스템을 개발했습니다.</p>
+        <p>아이디어 기획, AI 모델 선정, 데이터 전처리, 메뉴 추천 로직 설계를 수행했고 2023년도 겨울 ICIP&amp;캡스톤디자인 결과 발표회에서 장려상을 수상했습니다.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <span class="section-kicker">Education</span>
+      <h2>학력</h2>
+    </div>
+    <div class="intro-grid two-column">
+      <article class="content-card accent-teal">
+        <h3>멀티미디어소프트웨어공학전공</h3>
+        <p>2020년 3월 - 2026년 2월</p>
+      </article>
+      <article class="content-card accent-amber">
+        <h3>교환학생</h3>
+        <p>Department of Computer Science</p>
+        <p>2024년 2월 - 2024년 6월</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <span class="section-kicker">Projects</span>
+      <h2>프로젝트 자세히 보기</h2>
+    </div>
+    <div class="project-grid">
+      <article class="content-card project-card">
+        <h3>멀티프레소</h3>
+        <p>AI 기반 메뉴 추천 키오스크 시스템 프로젝트입니다.</p>
+      </article>
+      <article class="content-card project-card">
+        <h3>뚜띠</h3>
+        <p>백엔드 5명, 프론트엔드 3명, UX/UI 1명이 참여했습니다.</p>
+        <p>JWT 기반 이메일 인증 회원가입, 소셜 인증 회원가입, 회원 맞춤 추천 상품 로직을 담당했습니다.</p>
+      </article>
+      <article class="content-card project-card">
+        <h3>틈틈이</h3>
+        <p>백엔드 2명, 프론트엔드 2명이 참여했습니다.</p>
+        <p>ASGI 비동기 기반 채팅 기능 개발과 서버 배포를 담당했습니다.</p>
+      </article>
+      <article class="content-card project-card">
+        <h3>도란도란</h3>
+        <p>소프트웨어 설계 수업 중 진행한 발표 자료 프로젝트입니다.</p>
+        <p>3명이 함께 참여했습니다.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-heading">
+      <span class="section-kicker">Skills</span>
+      <h2>역량</h2>
+    </div>
+    <div class="skill-list">
+      <div class="skill-row">
+        <span>Java</span>
+        <div class="skill-bar"><span style="width: 80%"></span></div>
+        <strong>80%</strong>
+      </div>
+      <div class="skill-row">
+        <span>Python</span>
+        <div class="skill-bar"><span style="width: 60%"></span></div>
+        <strong>60%</strong>
+      </div>
+      <div class="skill-row">
+        <span>Spring Boot</span>
+        <div class="skill-bar"><span style="width: 70%"></span></div>
+        <strong>70%</strong>
+      </div>
+      <div class="skill-row">
+        <span>RAG</span>
+        <div class="skill-bar"><span style="width: 50%"></span></div>
+        <strong>50%</strong>
+      </div>
+      <div class="skill-row">
+        <span>Git</span>
+        <div class="skill-bar"><span style="width: 80%"></span></div>
+        <strong>80%</strong>
+      </div>
+      <div class="skill-row">
+        <span>Notion</span>
+        <div class="skill-bar"><span style="width: 90%"></span></div>
+        <strong>90%</strong>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

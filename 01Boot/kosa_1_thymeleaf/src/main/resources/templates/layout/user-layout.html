@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Layout</title>
+</head>
+<body>
+
+<header>
+    <h1>사용자 페이지</h1>
+    <nav>
+        <a th:href="@{/}">홈</a> |
+        <a th:href="@{/user/profile}">프로필</a> |
+        <a th:href="@{/admin/dashboard}">관리자</a>
+    </nav>
+    <hr>
+</header>
+
+<main>
+    <div th:replace="~{${content} :: content}"></div>
+</main>
+
+<footer>
+    <hr>
+    <p>사용자 Footer</p>
+</footer>
+
+</body>
+</html>
