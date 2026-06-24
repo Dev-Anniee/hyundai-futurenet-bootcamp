@@ -6,6 +6,7 @@
 <title>Index</title>
 </head>
 <body>
+		loginId : <span th:text="${loginId}"></span>
 		<ul>
 			<!--  -->
 			<th:block sec:authorize="hasAnyRole('ROLE_USER','ROLE_ADMIN')">
