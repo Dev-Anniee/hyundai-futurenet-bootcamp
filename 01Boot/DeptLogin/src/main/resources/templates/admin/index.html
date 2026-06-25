@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #f5f7fb; color: #1f2937; }
+        header { background: #111827; color: white; padding: 18px 32px; }
+        main { max-width: 1120px; margin: 28px auto; padding: 0 20px; }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .panel { background: white; border: 1px solid #d8dee9; border-radius: 8px; padding: 22px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: left; vertical-align: middle; }
+        th { background: #f9fafb; font-weight: 700; }
+        select, button { height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 10px; }
+        button { background: #1f2937; color: white; cursor: pointer; }
+        a { color: #1f2937; text-decoration: none; border: 1px solid #1f2937; border-radius: 6px; padding: 8px 12px; background: white; }
+        .roles { display: flex; gap: 6px; flex-wrap: wrap; }
+        .role { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 999px; padding: 4px 8px; font-size: 13px; }
+        .empty { color: #6b7280; }
+        form.inline { display: flex; gap: 8px; align-items: center; }
+    </style>
+</head>
+<body>
+<header>
+    <h2>관리자 페이지</h2>
+</header>
+<main>
+    <div class="toolbar">
+        <div>
+            <strong sec:authentication="principal.username"></strong>
+            <span>님</span>
+            <span sec:authentication="principal.authorities"></span>
+        </div>
+        <div>
+            <a href="/">메인</a>
+        </div>
+    </div>
+
+    <section class="panel">
+        <h3>회원 권한 관리</h3>
+        <p class="empty">특정 회원에게 ROLE_MANAGER 또는 ROLE_ADMIN 권한을 추가할 수 있습니다.</p>
+
+        <table>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>아이디</th>
+                <th>이메일</th>
+                <th>부서</th>
+                <th>현재 권한</th>
+                <th>권한 추가</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.userId}">1</td>
+                <td th:text="${user.username}">kim</td>
+                <td th:text="${user.email}">kim@test.com</td>
+                <td>
+                    <span th:if="${user.deptName != null}" th:text="|${user.deptName} (${user.deptno})|">개발팀</span>
+                    <span class="empty" th:if="${user.deptName == null}">미지정</span>
+                </td>
+                <td>
+                    <div class="roles" th:if="${not #lists.isEmpty(user.authList)}">
+                        <span class="role" th:each="auth : ${user.authList}" th:text="${auth.auth}">ROLE_USER</span>
+                    </div>
+                    <span class="empty" th:if="${#lists.isEmpty(user.authList)}">권한 없음</span>
+                </td>
+                <td>
+                    <form class="inline" action="/admin/roles" method="post">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <input type="hidden" name="userId" th:value="${user.userId}">
+                        <select name="roleName">
+                            <option value="ROLE_MANAGER">ROLE_MANAGER</option>
+                            <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+                        </select>
+                        <button type="submit">추가</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>

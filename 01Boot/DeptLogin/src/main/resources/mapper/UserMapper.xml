@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.kosa.mapper.UserMapper">
+
+    <resultMap type="Users" id="userMap">
+        <id property="userId" column="user_id" />
+        <result property="username" column="username" />
+        <result property="password" column="password" />
+        <result property="email" column="email" />
+        <result property="deptno" column="deptno" />
+        <result property="deptName" column="dept_name" />
+        <result property="enabled" column="enabled" />
+        <result property="regdate" column="regdate" />
+        <collection property="authList" resultMap="authMap" />
+    </resultMap>
+
+    <resultMap type="UserAuth" id="authMap">
+        <result property="userId" column="user_id" />
+        <result property="roleId" column="role_id" />
+        <result property="auth" column="auth" />
+    </resultMap>
+
+    <select id="login" resultMap="userMap">
+        select u.user_id,
+               u.username,
+               u.password,
+               u.email,
+               u.deptno,
+               d.dname as dept_name,
+               u.enabled,
+               u.regdate,
+               r.role_id,
+               r.role_name as auth
+        from kosauser u
+             left join dept d
+                    on u.deptno = d.deptno
+             left join user_roles ur
+                    on u.user_id = ur.user_id
+             left join roles r
+                    on ur.role_id = r.role_id
+        where u.username = #{username}
+    </select>
+
+    <select id="findAllUsers" resultMap="userMap">
+        select u.user_id,
+               u.username,
+               u.password,
+               u.email,
+               u.deptno,
+               d.dname as dept_name,
+               u.enabled,
+               u.regdate,
+               r.role_id,
+               r.role_name as auth
+        from kosauser u
+             left join dept d
+                    on u.deptno = d.deptno
+             left join user_roles ur
+                    on u.user_id = ur.user_id
+             left join roles r
+                    on ur.role_id = r.role_id
+        where not exists (
+            select 1
+            from user_roles admin_ur
+                 join roles admin_r
+                   on admin_ur.role_id = admin_r.role_id
+            where admin_ur.user_id = u.user_id
+              and admin_r.role_name = 'ROLE_ADMIN'
+        )
+        order by u.user_id, r.role_id
+    </select>
+
+    <insert id="join" parameterType="Users">
+        <selectKey keyProperty="userId" resultType="long" order="BEFORE">
+            select SEQ_KOSAUSER_ID.nextval from dual
+        </selectKey>
+        insert into kosauser (
+            user_id,
+            username,
+            password,
+            email,
+            deptno,
+            enabled
+        ) values (
+            #{userId},
+            #{username},
+            #{password},
+            #{email},
+            #{deptno},
+            1
+        )
+    </insert>
+
+    <insert id="insertAuth" parameterType="UserAuth">
+        insert into user_roles (user_id, role_id)
+        select #{userId}, r.role_id
+        from roles r
+        where r.role_name = #{auth}
+          and not exists (
+              select 1
+              from user_roles ur
+              where ur.user_id = #{userId}
+                and ur.role_id = r.role_id
+          )
+    </insert>
+
+</mapper>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>DeptLogin</title>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; background: #f5f7fb; color: #1f2937; }
+        header { background: #1f2937; color: white; padding: 18px 32px; }
+        main { max-width: 960px; margin: 32px auto; padding: 0 20px; }
+        .panel { background: white; border: 1px solid #d8dee9; border-radius: 8px; padding: 24px; }
+        .nav { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+        a, button { border: 1px solid #1f2937; background: white; color: #1f2937; padding: 9px 14px; border-radius: 6px; text-decoration: none; cursor: pointer; font-size: 14px; }
+        button.primary, a.primary { background: #1f2937; color: white; }
+        .muted { color: #6b7280; }
+        form { display: inline; }
+    </style>
+</head>
+<body>
+<header>
+    <h2>DeptLogin 권한 테스트</h2>
+</header>
+<main>
+    <section class="panel">
+        <h3>메인 페이지</h3>
+        <p>현재 사용자: <strong th:text="${loginId}">guest</strong></p>
+
+        <div sec:authorize="isAuthenticated()">
+            <p>로그인 계정: <strong sec:authentication="principal.username"></strong></p>
+            <p class="muted">권한: <span sec:authentication="principal.authorities"></span></p>
+        </div>
+
+        <div class="nav">
+            <a href="/guest">익명 페이지</a>
+            <a href="/user" sec:authorize="hasAnyRole('USER','MANAGER','ADMIN')">USER 페이지</a>
+            <a href="/manager" sec:authorize="hasAnyRole('MANAGER','ADMIN')">MANAGER 페이지</a>
+            <a href="/admin" sec:authorize="hasRole('ADMIN')">ADMIN 페이지</a>
+            <a href="/join" sec:authorize="isAnonymous()">회원가입</a>
+            <a class="primary" href="/login" sec:authorize="isAnonymous()">로그인</a>
+            <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button class="primary" type="submit">로그아웃</button>
+            </form>
+        </div>
+    </section>
+</main>
+</body>
+</html>
