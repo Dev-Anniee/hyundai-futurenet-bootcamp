@@ -1,0 +1,27 @@
+1.
+	// jwt  Spring 제공하지 않아요 (별도로 추가 (검색))
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+2.  로그인창 , 인증처리 , .....
+    http.formLogin((login) -> login.disable());
+    http.httpBasic((basic) -> basic.disable());
+    http.csrf(csrf -> csrf.disable());
+    http.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+    기본적인 자동화 금지 .... (로그인 창, session )
+
+3. JWT(json web token) 인증 방식 처리
+
+3.1 시크릿 키 : https://passwords-generator.org/
+    0)I=QY_QCdn>cLW6(A@/LB3kcDv_6F
+
+
+4. package 설정
+config
+constants
+constroller
+domain
+prop
+
