@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    /*
+1. JSX : https://www.w3schools.com/react/react_jsx.asp
+2. 사이트에서 기본적인 JSX 문법 확인
+
+
+
+Javascript Syatax eXtension 문법 종류
+
+1) JSX element
+JSX element는 자바스크립트 파일 어디에서나 필요한 곳에 HTML처럼 작성할 수 있으며,
+아래 예시처럼 변수에 저장할 수도 있고, 함수의 인자로 넘길 수도 있다.
+예시1)
+const hi = <p>Hi</p>;
+예시2) - JSX - Nesting
+
+정보(데이터) 관리
+서버(WEB) : 메모리 (session객체)
+사이트에 100 접속 .... 그러면 서버는  session객체 몇개 : 100개
+100개 session .. UUID (key) > 클라이언트 전달 > 서버와 클라이언트 동기화 (key)
+
+1.session > 사용자ID ...중요 ...보안중요
+
+2.application (전역자원)
+
+3.File (text)
+
+4.DB 서버 (영속적인 데이터)
+
+클라이언트
+key 관리 (cookie) : memory , file (소멸타임)
+
+1.cookie
+2.local storage
+...
+
+JAVA
+class Emp{
+    private int empno;
+    public void setEmpno(int empno){ //setter 함수 쓰기전용
+        this.empno = empno
+    }
+    public int getEmpno(){ //getter 함수  읽기전용
+        return this.empno;
+    }
+}
+
+
+
+>> function Login() {}
+
+>> 화살표 표현식
+const Login = () => {
+
+    const id = "";  //함수가 재호출되면 초기화 (기존 값을 기억하지 못해요 )
+
+    const [id, setID] = useState("");  //상태관리 (hook) (데이터)
+
+    //useState 값이 변경되는 Login 재호출 화면에 [ 재랜더링 ] 함수의 호출
+
+    const saveUserID = (event) => {
+        setID(event.target.value);
+    };
+
+    return(
+            <div>                            //Tag 를 표현 JSX
+                <input
+                    className="input_e-mail" //JSX className
+                    type="text"
+                    placeholder="이메일"
+                    value={id}
+                    onChange={saveUserID} //JSX 사용하면 스크립트 사용 { 함수 }
+                ></input>
+            </div>
+    );
+}.
+
+
+
+Javascript 표현식
+JSX 내부에서 자바스크립트 값을 출력하고 싶다면, { ... JavaScript... } 와 같이 { } 안에
+유효한 자바스크립트 표현식을 작성할 수 있음
+import React from 'react'
+
+//함수형 컴포넌트 (화살표 표현식 : () => {} )
+const Greetings = () => {
+        const name = '김개발';
+
+    return (
+        <>
+         <h1>{name}님, Welcome to Wecode!</h1> //JSX <h1> ,  JSX 스크립트 {}
+         <h1></h1>
+        </>
+
+    );
+};
+
+export default Greetings;
+
+
+JSX attribute(속성명) - (JSX : className)
+태그의 attribute name(속성명)은 camelCase로 작성해야하며, 만약에 attribute를 추가하고
+싶을 때는 실제 HTML에서 쓰는 attribute name(속성명)과 다를 수 있으니 참고해야 한다.
+(예를 들어, HTML에서 class를 주고 싶을 때 원래 속성명은 class이지만,
+JSX에서 사용하는 HTML class는 className을 사용해야함)
+// HTML
+<h1 class="greetings">Welcome to Wecode!</h1>
+
+// JSX
+<h1 className="greetings">Welcome to Wecode!</h1>
+
+Event 처리
+React가 아닌 바닐라 자바스크립트에서는, 해당하는 DOM 요소에 직접 접근해
+Event Listener를 부착하는 방식으로 이벤트를 처리했지만,
+
+ex) document.getElementById("btn").addEventListener("click",()=>{  });
+
+JSX에선 직접 이벤트와
+이벤트 핸들러(Event Handler)를 부여할 수 있는 방식으로 처리해야 한다.
+
+-> 이벤트는 앞에 on을 붙여 camelCase로 작성
+-> 문자열이 아닌 함수로 이벤트 핸들러를 전달
+// JS
+const title = document.getElementsByClassName('title')[0];
+title.addEventListener('click', handleClick);
+*/
+  </script>
