@@ -1,0 +1,42 @@
+import { useState } from 'react'
+import './App.css'
+
+function App() {
+
+  const [inputValue, setInputValue] = useState('');
+  const [inputValue1, setInputValue1] = useState('');
+  const [inputValue2, setInputValue2] = useState('');
+
+
+  const handleChange = (e) => {
+      setInputValue(e.target.value);
+  }
+
+  
+   const handleChange1 = (e) => {
+      setInputValue1(e.target.value);
+  }
+
+   const handleChange2 = (e) => {
+      setInputValue2(e.target.value);
+  }
+
+  const handleSubmit = () =>{
+    alert("inputValue : " + inputValue);
+    setInputValue('');
+  }
+  return (
+   <div className='App'>
+      <h3>useInput</h3>
+      <input type={inputValue} onChange={handleChange} />
+
+      <input type={inputValue1} onChange={handleChange1} />
+
+      <input type={inputValue2} onChange={handleChange2} />
+
+      <button onClick={handleSubmit}>확인</button>
+   </div>
+  )
+}
+
+export default App

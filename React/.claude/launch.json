@@ -1,0 +1,23 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ex17-board",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--prefix", "Labs/ex17-app-board"],
+      "port": 3000
+    },
+    {
+      "name": "ex17-board-axios",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--prefix", "Labs/ex17-app-board-axios"],
+      "port": 3001
+    },
+    {
+      "name": "ex17-board-zustand",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "start", "--prefix", "Labs/ex17-app-board-zustand"],
+      "port": 3002
+    }
+  ]
+}
