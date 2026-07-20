@@ -1,0 +1,25 @@
+body {
+    margin: 0;
+    background-color: #f5f6f8;
+}
+
+a {
+    text-decoration: none;
+}
+
+main {
+    min-height: 500px;
+}
+
+.board-title {
+    color: #212529;
+}
+
+.board-title:hover {
+    text-decoration: underline;
+}
+
+.page-title {
+    margin-bottom: 24px;
+    font-weight: 700;
+}
